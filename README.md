@@ -1,6 +1,6 @@
 # Ohjelmistotekniikka 2021 harjoitukset
 
-This is some **bold** statement *isn't it*.
+This is a **bold** statement *isn't it*.
 
 ## Viikko 1
 
