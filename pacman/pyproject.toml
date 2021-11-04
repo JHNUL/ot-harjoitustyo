@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "pacman"
+version = "0.1.0"
+description = ""
+authors = ["Juhanir <juhani.riisio@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pygame = "^2.0.3"
+pygame-menu = "^4.1.5"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.5"
+flake8 = "^4.0.1"
+autopep8 = "^1.6.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
