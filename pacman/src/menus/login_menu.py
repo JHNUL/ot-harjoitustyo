@@ -1,6 +1,6 @@
 from pygame import Surface
 
-from menus.user import User
+from user import User
 from menus.screens.landing_screen import LandingScreen
 from menus.screens.login_screen import LoginScreen
 from menus.screens.create_user_screen import CreateUserScreen
@@ -8,8 +8,8 @@ from menus.screens.screen_enums import ScreenName
 
 
 class LoginMenu:
-    def __init__(self, user: 'User'):
-        self._user = user
+    def __init__(self, player: 'User'):
+        self._player = player
         self._set_screen(ScreenName.LANDING)
 
     def _login_callback(self, username):
