@@ -1,25 +1,27 @@
 from pygame import Surface
 
-from user import User
-from menus.screens.landing_screen import LandingScreen
-from menus.screens.login_screen import LoginScreen
-from menus.screens.create_user_screen import CreateUserScreen
-from menus.screens.screen_enums import ScreenName
+from models.user import User
+from repositories.user_repository import UserRepository
+from ui.menus.screens.landing_screen import LandingScreen
+from ui.menus.screens.login_screen import LoginScreen
+from ui.menus.screens.create_user_screen import CreateUserScreen
+from ui.menus.screens.screen_enums import ScreenName
 
 
 class LoginMenu:
-    def __init__(self, player: 'User'):
+    def __init__(self, player: 'User', user_repository: 'UserRepository'):
         self._player = player
+        self._user_repository = user_repository
         self._set_screen(ScreenName.LANDING)
 
     def _login_callback(self, username):
-        print("login callback")
-        print(username)
+        user = self._user_repository.find_user(username)
+        self._player.set_login_time(user.login_time)
+        self._screen.menu.disable()
 
     def _create_user_callback(self, username, playername):
-        print("create user callback")
-        print(username)
-        print(playername)
+        print(username, playername)
+        self._user_repository.create_user(username, playername)
         self._set_screen(ScreenName.LOGIN)
 
     def _set_screen(self, screen: ScreenName):
@@ -36,4 +38,5 @@ class LoginMenu:
         self._screen.update(events)
 
     def draw(self, surface: 'Surface'):
-        self._screen.draw(surface)
+        if self._screen.menu.is_enabled():
+            self._screen.draw(surface)

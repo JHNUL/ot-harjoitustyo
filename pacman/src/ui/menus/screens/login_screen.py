@@ -1,7 +1,7 @@
 from pygame_menu import events
 
 import constants as c
-from menus.screens.base_screen import BaseScreen
+from ui.menus.screens.base_screen import BaseScreen
 
 
 class LoginScreen(BaseScreen):
