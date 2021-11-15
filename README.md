@@ -11,3 +11,5 @@ This is a **bold** statement *isn't it*.
 ## Viikko 2
 
 [vaatimusmaarittely.md](dokumentaatio/vaatimusmaarittely.md)
+
+[testikattavuus sreenshot](laskarit/viikko2/coverage_unicafe.png)

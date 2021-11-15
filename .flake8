@@ -1,0 +1,3 @@
+[flake8]
+exclude=./laskarit,.pytest_cache,**/__pycache__
+max-complexity = 10

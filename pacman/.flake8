@@ -1,3 +1,0 @@
-[flake8]
-exclude = .git,.pytest_cache,.vscode,poetry.lock,poetry.toml
-max_complexity = 10

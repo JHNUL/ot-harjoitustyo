@@ -8,14 +8,14 @@ Pelaaja
 
 ### Toiminnallisuuden kuvaus (MVP)
 Tunnuksien luominen:
-- pelaajan täytyy luoda käyttäjätunnus ja nimimerkki
-- sekä käyttäjätunnus että nimimerkki on oltava uniikkeja, järjestelmä ilmoittaa duplikaateista
+- pelaajan täytyy luoda käyttäjätunnus
+- käyttäjätunnuksen on oltava uniikki, järjestelmä ilmoittaa duplikaateista
 
 Kirjautuminen:
 - olemattomalla käyttäjätunnuksella kirjautumisesta ilmoitetaan
 
 Kirjautumisen jälkeen:
-- pelaaja näkee pelialustan ja leaderboardin, jossa listattu max 5 kappaletta parhaita tuloksia nimimerkkeineen
+- pelaaja näkee pelialustan ja leaderboardin, jossa listattu max 5 kappaletta parhaita tuloksia käyttäjätunnuksineen
 - pelaaja voi käynnistää pelin ja kontrolloida pac-ötökkää nuolinäppäimillä
 - pelaaja voi kerätä nappuloita
 - kerättyään supernappulan pelaaja voi syödä vihollisia tietyn ajan
@@ -28,6 +28,7 @@ Kirjautumisen jälkeen:
 Sovelluksen tulee toimia Linux ja macOS-käyttöjärjestelmillä. Tuettu Python-versio on >= 3.8. Pelaajien käyttäjätunnukset ja pelikertojen tulokset tallentuvat sqlite-tietokantaan (tai tiedostoon).
 
 ## Jatkokehitysideat
+- pelaaja voi kirjautua ulos jolloin sovellus palaa kirjautumisnäkymään
 - pelissä on useampia tasoja
 - pelissä on vaikeusaste, joka vaikuttaa esimerkiksi vihollisten määrään, nopeuteen ja uudelleenilmestymisen tiheyteen
 - vaikeusaste kasvaa joka tasolla
