@@ -19,3 +19,7 @@
 [Tehtävä 1](laskarit/viikko3/tehtava1.md)
 
 [Tehtävä 2](laskarit/viikko3/tehtava2.md)
+
+[Tehtävä 3](laskarit/viikko3/tehtava3.md)
+
+[Tehtävä 4](laskarit/viikko3/tehtava4.md)
