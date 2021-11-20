@@ -13,3 +13,9 @@
 [vaatimusmaarittely.md](dokumentaatio/vaatimusmaarittely.md)
 
 [testikattavuus sreenshot](laskarit/viikko2/coverage_unicafe.png)
+
+## Viikko 3
+
+[Tehtävä 1](laskarit/viikko3/tehtava1.md)
+
+[Tehtävä 2](laskarit/viikko3/tehtava2.md)
