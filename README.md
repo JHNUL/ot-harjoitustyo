@@ -1,6 +1,6 @@
 # Ohjelmistotekniikka 2021 harjoitukset
 
-This is a **bold** statement *isn't it*.
+[tuntikirjanpito](dokumentaatio/tuntikirjanpito.md)
 
 ## Viikko 1
 
