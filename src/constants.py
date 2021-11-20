@@ -15,3 +15,8 @@ BTN_TEXT_QUIT = "Quit"
 """Text input labels"""
 INPUT_LABEL_PLAYERNAME = "Player name:"
 INPUT_LABEL_SCREEN_NAME = "Screen name:"
+
+"""Environment"""
+PRODUCTION = "prod"
+TESTING = "test"
+DEVELOPMENT = "dev"

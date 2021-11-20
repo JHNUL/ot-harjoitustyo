@@ -4,6 +4,7 @@ from models.player import Player
 from game.sprites.pac import Pac
 from game.menus.login_menu import LoginMenu
 from repositories.player_repository import PlayerRepository
+from db_connection import get_db_connection
 
 
 def main():
@@ -11,7 +12,7 @@ def main():
     surface = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT))
     pygame.display.set_caption(SCREEN_TITLE_GAME)
     player = Player()
-    user_repo = PlayerRepository('foo')
+    user_repo = PlayerRepository(get_db_connection())
     login_menu = LoginMenu(player, user_repo)
     clock = pygame.time.Clock()
     sprites = pygame.sprite.Group()
@@ -24,7 +25,7 @@ def main():
 
         surface.fill(BG_COLOR)
 
-        if player.login_time is None:
+        if player.last_login is None:
             login_menu.update(events)
             login_menu.draw(surface)
             pygame.display.flip()
@@ -32,7 +33,7 @@ def main():
 
         sprites.draw(surface)
         pygame.display.flip()
-        clock.tick(30)
+        clock.tick(15)
 
 
 if __name__ == "__main__":

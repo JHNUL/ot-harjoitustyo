@@ -1,6 +1,6 @@
 class Score:
-    def __init__(self, id=None, user_id=None, timestamp=None, score=0):
+    def __init__(self, id=None, player_id=None, score_timestamp=None, score=0):
         self.id = id
-        self.user_id = user_id
-        self.timestamp = timestamp
+        self.player_id = player_id
+        self.score_timestamp = score_timestamp
         self.score = score

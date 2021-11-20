@@ -3,17 +3,17 @@ from invoke import task
 
 @task
 def test(ctx):
-    ctx.run('pytest ./src')
+    ctx.run('ENV=test pytest ./src')
 
 
 @task
 def start(ctx):
-    ctx.run('python3 ./src/index.py')
+    ctx.run('ENV=prod python3 ./src/index.py')
 
 
 @task
 def coverage(ctx):
-    ctx.run('coverage run --branch -m pytest src')
+    ctx.run('ENV=test coverage run --branch -m pytest ./src')
 
 
 @task(coverage)

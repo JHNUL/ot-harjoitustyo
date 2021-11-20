@@ -1,27 +1,25 @@
+from datetime import datetime
+
+
 class Player:
-    def __init__(self, id=None, playername=None, screenname=None, login_time=None):
+    def __init__(self, id=None, playername=None, last_login=None):
         self.id = id
         self.playername = playername
-        self.screenname = screenname
-        self.login_time = login_time
+        self.last_login = last_login
 
-    def set_id(self, id):
+    def set_id(self, id: int):
         self.id = id
 
-    def set_playername(self, playername):
+    def set_playername(self, playername: str):
         self.playername = playername
 
-    def set_screenname(self, screenname):
-        self.screenname = screenname
-
-    def set_login_time(self, time):
-        self.login_time = time
+    def set_login_time(self, time: float):
+        self.last_login = time
 
     def set_player(self, player: 'Player'):
         self.set_id(player.id)
         self.set_playername(player.playername)
-        self.set_screenname(player.screenname)
-        self.set_login_time(player.login_time)
+        self.set_login_time(player.last_login)
 
     def __str__(self) -> str:
-        return f"Player {self.screenname} with playername {self.playername} last logged {self.login_time}"
+        return f"Player {self.playername} last logged {datetime.fromtimestamp(self.last_login).isoformat()}"

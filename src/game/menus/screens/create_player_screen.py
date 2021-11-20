@@ -4,7 +4,7 @@ import constants as c
 from game.menus.screens.base_screen import BaseScreen
 
 
-class CreateUserScreen(BaseScreen):
+class CreatePlayerScreen(BaseScreen):
     def __init__(self, create_player_callback):
         super().__init__(c.SCREEN_TITLE_CREATE_PLAYER)
         self._create_player_callback = create_player_callback
