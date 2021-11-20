@@ -1,4 +1,5 @@
 import unittest
+from datetime import datetime
 from repositories.player_repository import PlayerRepository
 from models.player import Player
 from db_connection import get_db_connection
@@ -53,14 +54,14 @@ class TestUser(unittest.TestCase):
     def test_set_last_login_returns_true(self):
         repo = PlayerRepository(self.connection)
         repo.add_player("test_player")
-        res = repo.set_last_login("test_player")
+        res = repo.set_last_login("test_player", datetime.now().timestamp())
         self.assertTrue(res)
         self.clear_db()
 
     def test_set_last_login_returns_false_when_no_player_found(self):
         repo = PlayerRepository(self.connection)
         repo.add_player("test_player")
-        res = repo.set_last_login("foo_player")
+        res = repo.set_last_login("foo_player", datetime.now().timestamp())
         self.assertFalse(res)
         self.clear_db()
 
@@ -71,7 +72,7 @@ class TestUser(unittest.TestCase):
             "SELECT last_login FROM Players WHERE playername = 'test_player';")
         res = cursor.fetchone()
         self.assertIsNone(res[0])
-        repo.set_last_login("test_player")
+        repo.set_last_login("test_player", datetime.now().timestamp())
         cursor = self.connection.cursor().execute(
             "SELECT last_login FROM Players WHERE playername = 'test_player';")
         res = cursor.fetchone()
