@@ -1,25 +1,41 @@
-# Ohjelmistotekniikka 2021 harjoitukset
+# PACMAN
 
-[tuntikirjanpito](dokumentaatio/tuntikirjanpito.md)
+Sovellus on klassinen Pacman-peli, jossa pelaaja ohjaa Pacman-ötökkää labyrintin läpi tavoitteena syödä nappuloita ja väistellä vihollisia. Pelaajan tulee luoda käyttäjätunnus, jonka avulla pelaajan pelitulokset tallennetaan.
 
-## Viikko 1
+## Dokumentaatio
 
-[gitlog.txt](laskarit/viikko1/gitlog.txt)
+- [Tuntikirjanpito](dokumentaatio/tuntikirjanpito.md)
 
-[komentorivi.txt](laskarit/viikko1/komentorivi.txt)
+- [Vaatimusmäärittely](dokumentaatio/vaatimusmaarittely.md)
 
-## Viikko 2
+## Asennus
 
-[vaatimusmaarittely.md](dokumentaatio/vaatimusmaarittely.md)
+Järjestelmässä on oltava seuraavat ohjelmistot asennettuna:
 
-[testikattavuus sreenshot](laskarit/viikko2/coverage_unicafe.png)
+ - [Python](https://www.python.org/downloads/) v3.8+
+ - [Poetry](https://python-poetry.org/)
 
-## Viikko 3
+Projektin riippuvuudet asennetaan komennolla:
+```sh
+poetry install
+```
 
-[Tehtävä 1](laskarit/viikko3/tehtava1.md)
+## Komentorivitoiminnot
 
-[Tehtävä 2](laskarit/viikko3/tehtava2.md)
+Komennot ajetaan projektin juurihakemistossa.
 
-[Tehtävä 3](laskarit/viikko3/tehtava3.md)
+1. Käynnistäminen
+```sh
+poetry run invoke start
+```
 
-[Tehtävä 4](laskarit/viikko3/tehtava4.md)
+2. Yksikkötestien ajo
+```sh
+poetry run invoke test
+```
+
+3. Yksikkötestiraportin muodostaminen
+```sh
+poetry run invoke coverage-report
+```
+Raportti muodostuu hakemistoon htmlcov.
