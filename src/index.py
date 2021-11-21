@@ -5,15 +5,16 @@ from game.sprites.pac import Pac
 from game.menus.login_menu import LoginMenu
 from repositories.player_repository import PlayerRepository
 from db_connection import get_db_connection
+from init_db import initialize
 
 
 def main():
+    initialize()
     pygame.init()
     surface = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT))
     pygame.display.set_caption(SCREEN_TITLE_GAME)
     player = Player()
-    user_repo = PlayerRepository(get_db_connection())
-    login_menu = LoginMenu(player, user_repo)
+    login_menu = LoginMenu(player, PlayerRepository(get_db_connection()))
     clock = pygame.time.Clock()
     sprites = pygame.sprite.Group()
     sprites.add(Pac())

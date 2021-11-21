@@ -16,19 +16,19 @@ class LoginMenu:
         self._set_screen(ScreenName.LANDING)
 
     def _login_callback(self, playername):
-        player = self._player_repository.find_player(playername)
+        player = self._player_repository.find_player_by_name(playername)
         if player is None:
+            # TODO: announce in UI that login was unsuccessful
             raise Exception('Player not found')
-        self._player.set_player(player)
-        login_time = datetime.now().timestamp()
-        res = self._player_repository.set_last_login(player.playername, login_time)
+        player.set_login_time(datetime.now().timestamp())
+        res = self._player_repository.set_last_login(player)
         if res:
-            # TODO: fix this crap
-            self._player.set_login_time(login_time)
+            self._player.set_player(player)
         self._screen.menu.disable()
 
     def _create_player_callback(self, playername):
-        self._player_repository.add_player(playername)
+        player = Player(playername=playername)
+        self._player_repository.add_player(player)
         self._set_screen(ScreenName.LOGIN)
 
     def _set_screen(self, screen: ScreenName):
