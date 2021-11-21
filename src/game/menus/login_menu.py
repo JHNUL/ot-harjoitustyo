@@ -6,7 +6,7 @@ from repositories.player_repository import PlayerRepository
 from game.menus.screens.landing_screen import LandingScreen
 from game.menus.screens.login_screen import LoginScreen
 from game.menus.screens.create_player_screen import CreatePlayerScreen
-from game.menus.screens.screen_enums import ScreenName
+from game.menus.screens.screen_names import ScreenName
 
 
 class LoginMenu:

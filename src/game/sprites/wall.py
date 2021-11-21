@@ -3,12 +3,12 @@ import os
 dirname = os.path.dirname(__file__)
 
 
-class Pac(pygame.sprite.Sprite):
+class Wall(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
 
         self.image = pygame.image.load(
-            os.path.join(dirname, "..", "..", "assets", "proto_pac.png")
+            os.path.join(dirname, "..", "..", "assets", "proto_wall.png")
         )
         self.image = pygame.transform.scale(self.image, (50, 50))
         self.rect = self.image.get_rect()

@@ -9,13 +9,9 @@ def _get_script_path() -> str:
     return os.path.join(dirname, "..", "scripts", script_file)
 
 
-def initialize():
+def initialize_db():
     connection = get_db_connection()
     with open(_get_script_path(), "r") as script_file:
         init_script = script_file.read()
     connection.cursor().executescript(init_script)
     connection.commit()
-
-
-if __name__ == "__main__":
-    initialize()

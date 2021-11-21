@@ -2,7 +2,7 @@ from pygame_menu import events
 
 import constants as c
 from game.menus.screens.base_screen import BaseScreen
-from game.menus.screens.screen_enums import ScreenName
+from game.menus.screens.screen_names import ScreenName
 
 
 class LandingScreen(BaseScreen):

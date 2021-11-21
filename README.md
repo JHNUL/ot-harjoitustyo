@@ -39,3 +39,8 @@ poetry run invoke test
 poetry run invoke coverage-report
 ```
 Raportti muodostuu hakemistoon htmlcov.
+
+4. Linttaus
+```sh
+poetry run invoke lint
+```

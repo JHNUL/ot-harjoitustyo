@@ -1,10 +1,9 @@
 from pygame_menu import Menu
-import constants as c
 
 
 class BaseScreen:
     def __init__(self, title):
-        self.menu = Menu(title, c.DISPLAY_WIDTH/2, c.DISPLAY_HEIGHT/2)
+        self.menu = Menu(title, 500, 300)
 
     def update(self, events):
         self.menu.update(events)

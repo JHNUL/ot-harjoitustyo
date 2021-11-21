@@ -1,5 +1,5 @@
-DISPLAY_WIDTH, DISPLAY_HEIGHT = 1067, 600
 BG_COLOR = (25, 51, 77)
+CELL_SIZE = 50
 
 """Screen titles"""
 SCREEN_TITLE_LANDING = "Welcome!"
