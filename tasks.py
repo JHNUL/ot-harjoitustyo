@@ -3,7 +3,7 @@ from invoke import task
 
 @task
 def test(ctx):
-    ctx.run('ENV=test pytest ./src')
+    ctx.run('ENV=test pytest -s ./src')
 
 
 @task

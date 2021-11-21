@@ -3,19 +3,19 @@ from datetime import datetime
 from models.player import Player
 
 
-class TestUser(unittest.TestCase):
+class TestPlayer(unittest.TestCase):
     def test_initialize_player_without_arguments(self):
-        user = Player()
-        self.assertEqual(user.playername, None)
-        self.assertEqual(user.last_login, None)
+        player = Player()
+        self.assertEqual(player.playername, None)
+        self.assertEqual(player.last_login, None)
 
     def test_initialize_player_with_arguments(self):
-        user = Player(playername='mock')
-        self.assertEqual(user.playername, 'mock')
-        self.assertEqual(user.last_login, None)
+        player = Player(playername='mock')
+        self.assertEqual(player.playername, 'mock')
+        self.assertEqual(player.last_login, None)
 
     def test_set_login_time(self):
-        user = Player()
+        player = Player()
         time = datetime.now().isoformat()
-        user.set_login_time(time)
-        self.assertEqual(user.last_login, time)
+        player.set_login_time(time)
+        self.assertEqual(player.last_login, time)

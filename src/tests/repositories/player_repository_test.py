@@ -5,7 +5,7 @@ from models.player import Player
 from db_connection import get_db_connection
 
 
-class TestUser(unittest.TestCase):
+class TestPlayerRepository(unittest.TestCase):
     def setUp(self):
         self.connection = get_db_connection()
         self.test_player = Player(playername="test_player")
