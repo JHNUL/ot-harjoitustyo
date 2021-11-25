@@ -5,11 +5,11 @@ from game.menus.screens.base_screen import BaseScreen
 
 
 class CreatePlayerScreen(BaseScreen):
-    def __init__(self, create_player_callback):
+    def __init__(self, create_player_callback, message=""):
         super().__init__(c.SCREEN_TITLE_CREATE_PLAYER)
         self._create_player_callback = create_player_callback
         self._playername = None
-        self._init_screen()
+        self._init_screen(message)
 
     def _set_playername(self, value):
         self._playername = value
@@ -17,7 +17,9 @@ class CreatePlayerScreen(BaseScreen):
     def _create_player_btn_callback(self):
         self._create_player_callback(self._playername)
 
-    def _init_screen(self):
+    def _init_screen(self, message):
+        if message:
+            self.menu.add.label(message)
         self.menu.add.text_input(
             c.INPUT_LABEL_PLAYERNAME, onchange=self._set_playername)
         self.menu.add.button(c.BTN_TEXT_CREATE_PLAYER,

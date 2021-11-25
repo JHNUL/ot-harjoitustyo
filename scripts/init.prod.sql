@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS Players (
   id INTEGER PRIMARY KEY,
-  playername VARCHAR(30) NOT NULL,
+  playername VARCHAR(30) NOT NULL UNIQUE,
   last_login REAL
 );
 

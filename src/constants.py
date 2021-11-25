@@ -7,6 +7,10 @@ SCREEN_TITLE_LOGIN = "Login!"
 SCREEN_TITLE_CREATE_PLAYER = "Create player!"
 SCREEN_TITLE_GAME = "Pacman"
 
+"""Screen labels"""
+PLAYER_NOT_FOUND = "Player {} not found!"
+PLAYER_ALREADY_EXISTS = "Player {} already exists!"
+
 """Button texts"""
 BTN_TEXT_LOGIN = "Login"
 BTN_TEXT_CREATE_PLAYER = "Create player"
