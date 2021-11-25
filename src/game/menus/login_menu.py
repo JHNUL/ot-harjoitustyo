@@ -1,5 +1,5 @@
-from pygame import Surface
 from datetime import datetime
+from pygame import Surface
 
 from models.player import Player
 from repositories.player_repository import PlayerRepository
@@ -10,7 +10,7 @@ from game.menus.screens.screen_names import ScreenName
 
 
 class LoginMenu:
-    def __init__(self, player: 'Player', player_repository: 'PlayerRepository'):
+    def __init__(self, player: Player, player_repository: PlayerRepository):
         self._player = player
         self._player_repository = player_repository
         self._set_screen(ScreenName.LANDING)
@@ -45,6 +45,6 @@ class LoginMenu:
         if self._screen.menu.is_enabled():
             self._screen.update(events)
 
-    def draw(self, surface: 'Surface'):
+    def draw(self, surface: Surface):
         if self._screen.menu.is_enabled():
             self._screen.draw(surface)

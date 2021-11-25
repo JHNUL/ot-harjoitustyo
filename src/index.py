@@ -1,3 +1,4 @@
+import sys
 import pygame
 from constants import BG_COLOR, SCREEN_TITLE_GAME
 from game.level import Level
@@ -41,7 +42,7 @@ def main():
         events = pygame.event.get()
         for event in events:
             if event.type == pygame.QUIT:
-                exit()
+                sys.exit()
             if event.type == pygame.KEYDOWN:
                 direction = event.key
             if event.type == pygame.KEYUP:

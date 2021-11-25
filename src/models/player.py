@@ -2,13 +2,13 @@ from datetime import datetime
 
 
 class Player:
-    def __init__(self, id=None, playername=None, last_login=None):
-        self.id = id
+    def __init__(self, id_=None, playername=None, last_login=None):
+        self.id = id_
         self.playername = playername
         self.last_login = last_login
 
-    def set_id(self, id: int):
-        self.id = id
+    def set_id(self, id_: int):
+        self.id = id_
 
     def set_playername(self, playername: str):
         self.playername = playername
@@ -22,4 +22,5 @@ class Player:
         self.set_login_time(player.last_login)
 
     def __str__(self) -> str:
-        return f"Player {self.playername} last logged {datetime.fromtimestamp(self.last_login).isoformat()}"
+        last_lgn = datetime.fromtimestamp(self.last_login).isoformat()
+        return f"Player {self.playername} last logged {last_lgn}"

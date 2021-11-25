@@ -3,10 +3,10 @@ from models.score import Score
 
 
 class ScoreRepository:
-    def __init__(self, connection: 'Connection'):
+    def __init__(self, connection: Connection):
         self._connection = connection
 
-    def add_score(self, score: 'Score') -> bool:
+    def add_score(self, score: Score) -> bool:
         self._connection.cursor().execute(
             "INSERT INTO Scores(player_id, score_timestamp, score) VALUES (?,?,?);",
             (score.player_id, score.score_timestamp, score.score)
@@ -24,7 +24,7 @@ class ScoreRepository:
         rows = cursor.fetchall()
         if rows is None:
             return []
-        return [Score(s['player_id'], s['score_timestamp'], s['score'], id=s['id']) for s in rows]
+        return [Score(s['player_id'], s['score_timestamp'], s['score'], id_=s['id']) for s in rows]
 
     def find_top_scores(self, limit=5) -> list:
         cursor = self._connection.cursor().execute(
@@ -32,4 +32,4 @@ class ScoreRepository:
         rows = cursor.fetchall()
         if rows is None:
             return []
-        return [Score(s['player_id'], s['score_timestamp'], s['score'], id=s['id']) for s in rows]
+        return [Score(s['player_id'], s['score_timestamp'], s['score'], id_=s['id']) for s in rows]

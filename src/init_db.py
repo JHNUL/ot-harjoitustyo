@@ -11,7 +11,7 @@ def _get_script_path() -> str:
 
 def initialize_db():
     connection = get_db_connection()
-    with open(_get_script_path(), "r") as script_file:
+    with open(_get_script_path(), "r", encoding="utf8") as script_file:
         init_script = script_file.read()
     connection.cursor().executescript(init_script)
     connection.commit()

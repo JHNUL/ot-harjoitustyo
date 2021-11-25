@@ -23,4 +23,4 @@ def coverage_report(ctx):
 
 @task
 def lint(ctx):
-    ctx.run('flake8')
+    ctx.run('pylint src')
