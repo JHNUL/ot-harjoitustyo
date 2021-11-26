@@ -15,6 +15,7 @@ PLAYER_ALREADY_EXISTS = "Player {} already exists!"
 BTN_TEXT_LOGIN = "Login"
 BTN_TEXT_CREATE_PLAYER = "Create player"
 BTN_TEXT_QUIT = "Quit"
+BTN_TEXT_BACK = "Back"
 
 """Text input labels"""
 INPUT_LABEL_PLAYERNAME = "Player name:"

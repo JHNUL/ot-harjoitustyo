@@ -41,9 +41,9 @@ class LoginMenu:
         if screen == ScreenName.LANDING:
             self._screen = LandingScreen(self._set_screen)
         elif screen == ScreenName.CREATE_PLAYER:
-            self._screen = CreatePlayerScreen(self._create_player_callback, message)
+            self._screen = CreatePlayerScreen(self._set_screen, self._create_player_callback, message)
         elif screen == ScreenName.LOGIN:
-            self._screen = LoginScreen(self._login_callback, message)
+            self._screen = LoginScreen(self._set_screen, self._login_callback, message)
         else:
             raise TypeError(f"{screen} not recognized")
 

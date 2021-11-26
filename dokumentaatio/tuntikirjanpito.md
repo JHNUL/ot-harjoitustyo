@@ -9,4 +9,5 @@
 | 20.11       | 6           | backlogin muodostaminen Trelloon, taskien lisäilyä ja priorisointia, sqlite tietokannan käyttöönottoa |
 | 21.11       | 6           | repositorion READMEn muotoilu viikon 3 vaatimusten mukaiseksi, projektin koodaamista |
 | 25.11       | 4           | harjoitustyön työstämistä viikko 4 vaatimusten mukaisesti |
-|yht| 27  |
+| 26.11       | 1           | harjoitustyön työstämistä |
+|yht| 28  |
