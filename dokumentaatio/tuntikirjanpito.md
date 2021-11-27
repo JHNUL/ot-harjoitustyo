@@ -10,4 +10,5 @@
 | 21.11       | 6           | repositorion READMEn muotoilu viikon 3 vaatimusten mukaiseksi, projektin koodaamista |
 | 25.11       | 4           | harjoitustyön työstämistä viikko 4 vaatimusten mukaisesti |
 | 26.11       | 1           | harjoitustyön työstämistä |
-|yht| 28  |
+| 27.11       | 2           | harjoitustyön työstämistä |
+|yht| 30  |

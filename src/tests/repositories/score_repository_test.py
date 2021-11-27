@@ -8,7 +8,7 @@ from db_connection import get_db_connection
 class TestScoreRepository(unittest.TestCase):
     def setUp(self):
         self.connection = get_db_connection()
-        self.test_score = Score(1, 1234.1234, 10)
+        self.test_score = Score(10, player_id=1, score_timestamp=1234.1234)
 
     def clear_db(self):
         self.connection.cursor().execute("DELETE FROM Players;")
@@ -32,8 +32,8 @@ class TestScoreRepository(unittest.TestCase):
     def test_find_score_by_player_id_returns_scores_for_player(self):
         repo = ScoreRepository(self.connection)
         for x in range(5):
-            repo.add_score(Score(1, datetime.now().timestamp(), x+10))
-            repo.add_score(Score(2, datetime.now().timestamp(), x+20))
+            repo.add_score(Score(x+10, 1, datetime.now().timestamp()))
+            repo.add_score(Score(x+20, 2, datetime.now().timestamp()))
 
         res = repo.find_scores_by_player_id(1)
         self.assertIsInstance(res, list)
@@ -45,7 +45,7 @@ class TestScoreRepository(unittest.TestCase):
     def test_find_score_by_player_id_returns_scores_in_descending_order(self):
         repo = ScoreRepository(self.connection)
         for x in range(5):
-            repo.add_score(Score(1, datetime.now().timestamp(), x+10))
+            repo.add_score(Score(x+10, 1, datetime.now().timestamp()))
 
         res = repo.find_scores_by_player_id(1)
         for i in range(1, 5):
@@ -55,7 +55,7 @@ class TestScoreRepository(unittest.TestCase):
     def test_find_score_by_player_id_returns_top_n_scores_for_player(self):
         repo = ScoreRepository(self.connection)
         for x in range(10):
-            repo.add_score(Score(1, datetime.now().timestamp(), x+10))
+            repo.add_score(Score(x+10, 1, datetime.now().timestamp()))
 
         res = repo.find_scores_by_player_id(1, 3)
         self.assertTrue(len(res) == 3)
@@ -66,12 +66,12 @@ class TestScoreRepository(unittest.TestCase):
 
     def test_get_top_n_scores_returns_top_scores_across_all_players(self):
         repo = ScoreRepository(self.connection)
-        repo.add_score(Score(1, datetime.now().timestamp(), 100))
-        repo.add_score(Score(1, datetime.now().timestamp(), 80))
-        repo.add_score(Score(2, datetime.now().timestamp(), 99))
-        repo.add_score(Score(3, datetime.now().timestamp(), 135))
-        repo.add_score(Score(4, datetime.now().timestamp(), 59))
-        repo.add_score(Score(4, datetime.now().timestamp(), 109))
+        repo.add_score(Score(100, 1, datetime.now().timestamp()))
+        repo.add_score(Score(80, 1, datetime.now().timestamp()))
+        repo.add_score(Score(99, 2, datetime.now().timestamp()))
+        repo.add_score(Score(135, 3, datetime.now().timestamp()))
+        repo.add_score(Score(59, 4, datetime.now().timestamp()))
+        repo.add_score(Score(109, 4, datetime.now().timestamp()))
 
         res = repo.find_top_scores(4)
         self.assertTrue(len(res) == 4)

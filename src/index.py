@@ -3,8 +3,9 @@ import pygame
 from constants import BG_COLOR, SCREEN_TITLE_GAME
 from game.level import Level
 from game.menus.login_menu import LoginMenu
-from repositories.player_repository import PlayerRepository
+from models.score import Score
 from models.player import Player
+from repositories.player_repository import PlayerRepository
 from db_connection import get_db_connection
 from init_db import initialize_db
 from utils import normalize
@@ -32,9 +33,10 @@ def main():
     display_width = normalize(len(MAP[0]))
     display_height = normalize(len(MAP))
     surface = pygame.display.set_mode((display_width, display_height))
-    level = Level(MAP)
     pygame.display.set_caption(SCREEN_TITLE_GAME)
     player = Player()
+    score = Score(0)
+    level = Level(MAP, score)
     login_menu = LoginMenu(player, PlayerRepository(get_db_connection()))
     clock = pygame.time.Clock()
     direction = None

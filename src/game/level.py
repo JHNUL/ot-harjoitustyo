@@ -2,16 +2,18 @@ import pygame
 from game.sprites.nugget import Nugget
 from game.sprites.pac import Pac
 from game.sprites.wall import Wall
+from models.score import Score
 from utils import normalize
 from constants import CELL_SIZE
 
 
 class Level:
-    def __init__(self, level_map):
+    def __init__(self, level_map, score: Score):
         self.pac = None
         self.walls = pygame.sprite.Group()
         self.nuggets = pygame.sprite.Group()
         self.sprites = pygame.sprite.Group()
+        self.current_score = score
         self._create_level(level_map)
 
     def _create_level(self, level_map):
@@ -27,9 +29,11 @@ class Level:
 
         self.sprites.add(self.pac, self.walls, self.nuggets)
 
-    def _check_collision(self, sprites):
-        return len(pygame.sprite.spritecollide(self.pac, sprites, False))
+    def _check_collision(self, sprites, do_kill=False):
+        return len(pygame.sprite.spritecollide(self.pac, sprites, do_kill))
 
+    def _increase_score(self):
+        self.current_score.increase()
 
     def move_pac(self, direction):
         d_x, d_y = 0, 0
@@ -45,6 +49,9 @@ class Level:
         elif direction == pygame.K_DOWN:
             self.pac.rect.move_ip(0, CELL_SIZE)
             d_x, d_y = 0, -CELL_SIZE
+
+        if self._check_collision(self.nuggets, True):
+            self.current_score.increase()
 
         if self._check_collision(self.walls):
             self.pac.rect.move_ip(d_x, d_y)
