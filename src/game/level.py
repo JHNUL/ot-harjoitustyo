@@ -38,20 +38,19 @@ class Level:
     def move_pac(self, direction):
         d_x, d_y = 0, 0
         if direction == pygame.K_LEFT:
-            self.pac.rect.move_ip(-CELL_SIZE, 0)
-            d_x, d_y = CELL_SIZE, 0
-        elif direction == pygame.K_RIGHT:
-            self.pac.rect.move_ip(CELL_SIZE, 0)
             d_x, d_y = -CELL_SIZE, 0
+        elif direction == pygame.K_RIGHT:
+            d_x, d_y = CELL_SIZE, 0
         elif direction == pygame.K_UP:
-            self.pac.rect.move_ip(0, -CELL_SIZE)
-            d_x, d_y = 0, CELL_SIZE
-        elif direction == pygame.K_DOWN:
-            self.pac.rect.move_ip(0, CELL_SIZE)
             d_x, d_y = 0, -CELL_SIZE
+        elif direction == pygame.K_DOWN:
+            d_x, d_y = 0, CELL_SIZE
 
-        if self._check_collision(self.nuggets, True):
-            self.current_score.increase()
-
-        if self._check_collision(self.walls):
+        if d_x or d_y:
             self.pac.rect.move_ip(d_x, d_y)
+
+            if self._check_collision(self.walls):
+                self.pac.rect.move_ip(-d_x, -d_y)
+
+            if self._check_collision(self.nuggets, True):
+                self.current_score.increase()
