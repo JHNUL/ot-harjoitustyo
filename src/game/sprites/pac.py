@@ -6,7 +6,7 @@ dirname = os.path.dirname(__file__)
 class Pac(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
-
+        self.lives = 3
         self.image = pygame.image.load(
             os.path.join(dirname, "..", "..", "assets", "proto_pac.png")
         )

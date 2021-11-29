@@ -1,4 +1,7 @@
+import pygame
+
 BG_COLOR = (25, 51, 77)
+WHITE = pygame.Color(255, 255, 255)
 CELL_SIZE = 50
 
 """Screen titles"""
