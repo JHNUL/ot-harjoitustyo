@@ -17,10 +17,10 @@ class LoginMenu:
         self._player_repository = player_repository
         self._set_screen(ScreenName.LANDING)
 
-    def _login_callback(self, playername):
-        player = self._player_repository.find_player_by_name(playername)
+    def _login_callback(self, name):
+        player = self._player_repository.find_player_by_name(name)
         if player is None:
-            self._set_screen(ScreenName.LOGIN, PLAYER_NOT_FOUND.format(playername))
+            self._set_screen(ScreenName.LOGIN, PLAYER_NOT_FOUND.format(name))
             return
         player.set_login_time(datetime.now().timestamp())
         res = self._player_repository.set_last_login(player)
@@ -28,12 +28,12 @@ class LoginMenu:
             self._player.set_player(player)
         self._screen.menu.disable()
 
-    def _create_player_callback(self, playername):
-        player = Player(playername=playername)
+    def _create_player_callback(self, name):
+        player = Player(name=name)
         try:
             self._player_repository.add_player(player)
         except IntegrityError:
-            self._set_screen(ScreenName.CREATE_PLAYER, PLAYER_ALREADY_EXISTS.format(playername))
+            self._set_screen(ScreenName.CREATE_PLAYER, PLAYER_ALREADY_EXISTS.format(name))
             return
         self._set_screen(ScreenName.LOGIN)
 

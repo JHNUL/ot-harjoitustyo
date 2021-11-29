@@ -35,10 +35,10 @@ class TestLevel(unittest.TestCase):
         self.assertEqual(self.level.pac.rect.y, normalize(2))
 
     def test_collecting_nuggets_increases_score(self):
-        self.assertEqual(self.score.score, 0)
+        self.assertEqual(self.score.value, 0)
         self.level.move_pac(pygame.K_LEFT)
         self.level.move_pac(pygame.K_UP)
-        self.assertEqual(self.score.score, 2)
+        self.assertEqual(self.score.value, 2)
 
     def test_nuggets_are_removed_from_group(self):
         self.assertEqual(len(self.level.nuggets), 15)

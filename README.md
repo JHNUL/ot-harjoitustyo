@@ -8,6 +8,8 @@ Sovellus on klassinen Pacman-peli, jossa pelaaja ohjaa Pacman-ötökkää labyri
 
 - [Vaatimusmäärittely](dokumentaatio/vaatimusmaarittely.md)
 
+- [Arkkitehtuurikuvaus](dokumentaatio/arkkitehtuuri.md)
+
 ## Asennus
 
 Järjestelmässä on oltava seuraavat ohjelmistot asennettuna:
@@ -19,6 +21,8 @@ Projektin riippuvuudet asennetaan komennolla:
 ```sh
 poetry install
 ```
+
+Sovellus käyttää sqlite-tietokantaa, mutta toistaiseksi ilman migraatioskriptejä. Kun siis lataat uuden version testattavaksi, poista edellisen suorituskerran generoima `data/database.prod.sqlite` tiedosto.
 
 ## Komentorivitoiminnot
 

@@ -8,16 +8,16 @@ Pelaaja
 
 ### Toiminnallisuuden kuvaus (MVP)
 Tunnuksien luominen:
-- pelaajan täytyy luoda käyttäjätunnus (tehty)
-- käyttäjätunnuksen on oltava uniikki, järjestelmä ilmoittaa duplikaateista (tehty)
+- pelaajan täytyy luoda käyttäjätunnus ***tehty***
+- käyttäjätunnuksen on oltava uniikki, järjestelmä ilmoittaa duplikaateista ***tehty***
 
 Kirjautuminen:
-- olemattomalla käyttäjätunnuksella kirjautumisesta ilmoitetaan (tehty)
+- olemattomalla käyttäjätunnuksella kirjautumisesta ilmoitetaan ***tehty***
 
 Kirjautumisen jälkeen:
 - pelaaja näkee pelialustan ja leaderboardin, jossa listattu max 5 kappaletta parhaita tuloksia käyttäjätunnuksineen
-- pelaaja voi käynnistää pelin ja kontrolloida pac-ötökkää nuolinäppäimillä
-- pelaaja voi kerätä nappuloita
+- pelaaja voi käynnistää pelin ja kontrolloida pac-ötökkää nuolinäppäimillä ***tehty***
+- pelaaja voi kerätä nappuloita ***tehty***
 - kerättyään supernappulan pelaaja voi syödä vihollisia tietyn ajan
 - pelaaja näkee reaaliaikaisen pistesaldonsa
 - pelaaja näkee jäljellä olevat elämänsä

@@ -8,7 +8,7 @@ from db_connection import get_db_connection
 class TestPlayerRepository(unittest.TestCase):
     def setUp(self):
         self.connection = get_db_connection()
-        self.test_player = Player(playername="test_player")
+        self.test_player = Player(name="test_player")
 
     def clear_db(self):
         self.connection.cursor().execute("DELETE FROM Players;")
@@ -41,7 +41,7 @@ class TestPlayerRepository(unittest.TestCase):
         repo.add_player(self.test_player)
         player = repo.find_player_by_name("test_player")
         self.assertEqual(player.id, 1)
-        self.assertEqual(player.playername, "test_player")
+        self.assertEqual(player.name, "test_player")
         self.assertEqual(player.last_login, None)
         self.clear_db()
 
@@ -73,13 +73,13 @@ class TestPlayerRepository(unittest.TestCase):
         repo = PlayerRepository(self.connection)
         repo.add_player(self.test_player)
         cursor = self.connection.cursor().execute(
-            "SELECT last_login FROM Players WHERE playername = 'test_player';")
+            "SELECT last_login FROM Players WHERE name = 'test_player';")
         res = cursor.fetchone()
         self.assertIsNone(res[0])
         self.test_player.set_login_time(datetime.now().timestamp())
         repo.set_last_login(self.test_player)
         cursor = self.connection.cursor().execute(
-            "SELECT last_login FROM Players WHERE playername = 'test_player';")
+            "SELECT last_login FROM Players WHERE name = 'test_player';")
         res = cursor.fetchone()
         self.assertIsInstance(res[0], float)
         self.clear_db()

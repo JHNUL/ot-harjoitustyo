@@ -17,7 +17,7 @@ class Level:
         self._create_level(level_map)
 
     def _create_level(self, level_map):
-        for y in range(len(level_map)):  # pylint: disable=consider-using-enumerate
+        for y in range(len(level_map)):
             for x in range(len(level_map[0])):
                 cell = level_map[y][x]
                 if cell == 2:

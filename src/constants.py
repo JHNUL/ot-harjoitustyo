@@ -18,7 +18,7 @@ BTN_TEXT_QUIT = "Quit"
 BTN_TEXT_BACK = "Back"
 
 """Text input labels"""
-INPUT_LABEL_PLAYERNAME = "Player name:"
+INPUT_LABEL_PLAYER_NAME = "Player name:"
 INPUT_LABEL_SCREEN_NAME = "Screen name:"
 
 """Environment"""

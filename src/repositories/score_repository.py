@@ -8,28 +8,28 @@ class ScoreRepository:
 
     def add_score(self, score: Score) -> bool:
         self._connection.cursor().execute(
-            "INSERT INTO Scores(player_id, score_timestamp, score) VALUES (?,?,?);",
-            (score.player_id, score.score_timestamp, score.score)
+            "INSERT INTO Scores(player_id, timestamp, value) VALUES (?,?,?);",
+            (score.player_id, score.timestamp, score.value)
         )
         self._connection.commit()
         return True
 
     def find_scores_by_player_id(self, player_id: int, limit=0) -> list:
-        query = "SELECT * FROM Scores WHERE player_id = (?) ORDER BY score DESC;"
+        query = "SELECT * FROM Scores WHERE player_id = (?) ORDER BY value DESC;"
         params = (player_id,)
         if limit:
-            query = "SELECT * FROM Scores WHERE player_id = (?) ORDER BY score DESC LIMIT (?);"
+            query = "SELECT * FROM Scores WHERE player_id = (?) ORDER BY value DESC LIMIT (?);"
             params = (player_id, limit)
         cursor = self._connection.cursor().execute(query, params)
         rows = cursor.fetchall()
         if rows is None:
             return []
-        return [Score(s['score'], s['player_id'], s['score_timestamp'], id_=s['id']) for s in rows]
+        return [Score(s['value'], s['player_id'], s['timestamp'], id_=s['id']) for s in rows]
 
     def find_top_scores(self, limit=5) -> list:
         cursor = self._connection.cursor().execute(
-            "SELECT * FROM Scores ORDER BY score DESC LIMIT (?);", (limit,))
+            "SELECT * FROM Scores ORDER BY value DESC LIMIT (?);", (limit,))
         rows = cursor.fetchall()
         if rows is None:
             return []
-        return [Score(s['score'], s['player_id'], s['score_timestamp'], id_=s['id']) for s in rows]
+        return [Score(s['value'], s['player_id'], s['timestamp'], id_=s['id']) for s in rows]

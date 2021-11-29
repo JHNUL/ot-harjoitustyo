@@ -11,4 +11,5 @@
 | 25.11       | 4           | harjoitustyön työstämistä viikko 4 vaatimusten mukaisesti |
 | 26.11       | 1           | harjoitustyön työstämistä |
 | 27.11       | 2           | harjoitustyön työstämistä |
-|yht| 30  |
+| 29.11       | 2           | viikko 4 palautuksen viimeistely |
+|yht| 32  |

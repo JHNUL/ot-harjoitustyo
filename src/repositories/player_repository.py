@@ -8,21 +8,21 @@ class PlayerRepository:
 
     def add_player(self, player: Player) -> bool:
         self._connection.cursor().execute(
-            "INSERT INTO Players(playername) VALUES (?);", (player.playername,))
+            "INSERT INTO Players(name) VALUES (?);", (player.name,))
         self._connection.commit()
         return True
 
-    def find_player_by_name(self, playername) -> Player:
+    def find_player_by_name(self, name) -> Player:
         cursor = self._connection.cursor().execute(
-            "SELECT * FROM Players WHERE playername = (?);", (playername,))
+            "SELECT * FROM Players WHERE name = (?);", (name,))
         row = cursor.fetchone()
         if row is None:
             return None
-        return Player(row['id'], row['playername'], row['last_login'])
+        return Player(row['id'], row['name'], row['last_login'])
 
     def set_last_login(self, player: Player) -> bool:
         cursor = self._connection.cursor().execute(
-            "SELECT * FROM Players WHERE playername = (?);", (player.playername,))
+            "SELECT * FROM Players WHERE name = (?);", (player.name,))
         row = cursor.fetchone()
         if row is None:
             return False

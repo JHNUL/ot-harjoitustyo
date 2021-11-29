@@ -8,7 +8,7 @@ from db_connection import get_db_connection
 class TestScoreRepository(unittest.TestCase):
     def setUp(self):
         self.connection = get_db_connection()
-        self.test_score = Score(10, player_id=1, score_timestamp=1234.1234)
+        self.test_score = Score(10, player_id=1, timestamp=1234.1234)
 
     def clear_db(self):
         self.connection.cursor().execute("DELETE FROM Players;")
@@ -49,7 +49,7 @@ class TestScoreRepository(unittest.TestCase):
 
         res = repo.find_scores_by_player_id(1)
         for i in range(1, 5):
-            self.assertTrue(res[i-1].score > res[i].score)
+            self.assertTrue(res[i-1].value > res[i].value)
         self.clear_db()
 
     def test_find_score_by_player_id_returns_top_n_scores_for_player(self):
@@ -59,9 +59,9 @@ class TestScoreRepository(unittest.TestCase):
 
         res = repo.find_scores_by_player_id(1, 3)
         self.assertTrue(len(res) == 3)
-        self.assertTrue(res[0].score == 19)
-        self.assertTrue(res[1].score == 18)
-        self.assertTrue(res[2].score == 17)
+        self.assertTrue(res[0].value == 19)
+        self.assertTrue(res[1].value == 18)
+        self.assertTrue(res[2].value == 17)
         self.clear_db()
 
     def test_get_top_n_scores_returns_top_scores_across_all_players(self):
@@ -75,8 +75,8 @@ class TestScoreRepository(unittest.TestCase):
 
         res = repo.find_top_scores(4)
         self.assertTrue(len(res) == 4)
-        self.assertTrue(res[0].score == 135)
-        self.assertTrue(res[1].score == 109)
-        self.assertTrue(res[2].score == 100)
-        self.assertTrue(res[3].score == 99)
+        self.assertTrue(res[0].value == 135)
+        self.assertTrue(res[1].value == 109)
+        self.assertTrue(res[2].value == 100)
+        self.assertTrue(res[3].value == 99)
         self.clear_db()
