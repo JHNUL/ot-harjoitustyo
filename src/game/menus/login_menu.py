@@ -26,14 +26,14 @@ class LoginMenu:
         res = self._player_repository.set_last_login(player)
         if res:
             self._player.set_player(player)
-        self._screen.menu.disable()
 
     def _create_player_callback(self, name):
         player = Player(name=name)
         try:
             self._player_repository.add_player(player)
         except IntegrityError:
-            self._set_screen(ScreenName.CREATE_PLAYER, PLAYER_ALREADY_EXISTS.format(name))
+            self._set_screen(ScreenName.CREATE_PLAYER,
+                             PLAYER_ALREADY_EXISTS.format(name))
             return
         self._set_screen(ScreenName.LOGIN)
 
@@ -41,9 +41,11 @@ class LoginMenu:
         if screen == ScreenName.LANDING:
             self._screen = LandingScreen(self._set_screen)
         elif screen == ScreenName.CREATE_PLAYER:
-            self._screen = CreatePlayerScreen(self._set_screen, self._create_player_callback, message)
+            self._screen = CreatePlayerScreen(
+                self._set_screen, self._create_player_callback, message)
         elif screen == ScreenName.LOGIN:
-            self._screen = LoginScreen(self._set_screen, self._login_callback, message)
+            self._screen = LoginScreen(
+                self._set_screen, self._login_callback, message)
         else:
             raise TypeError(f"{screen} not recognized")
 

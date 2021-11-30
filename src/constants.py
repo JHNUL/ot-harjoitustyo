@@ -8,7 +8,8 @@ CELL_SIZE = 50
 SCREEN_TITLE_LANDING = "Welcome!"
 SCREEN_TITLE_LOGIN = "Login!"
 SCREEN_TITLE_CREATE_PLAYER = "Create player!"
-SCREEN_TITLE_GAME = "Pacman"
+SCREEN_TITLE_GAME = "PACMAN"
+SCREEN_TITLE_GAME_OVER = "Game over!"
 
 """Screen labels"""
 PLAYER_NOT_FOUND = "Player {} not found!"
@@ -17,6 +18,7 @@ PLAYER_ALREADY_EXISTS = "Player {} already exists!"
 """Button texts"""
 BTN_TEXT_LOGIN = "Login"
 BTN_TEXT_CREATE_PLAYER = "Create player"
+BTN_TEXT_NEW_GAME = "New game"
 BTN_TEXT_QUIT = "Quit"
 BTN_TEXT_BACK = "Back"
 
