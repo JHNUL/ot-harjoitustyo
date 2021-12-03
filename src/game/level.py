@@ -19,7 +19,9 @@ class Level:
         self.current_score = score
         self.create_level()
 
-    def create_level(self):
+    def create_level(self, reset_score=True):
+        if reset_score:
+            self.current_score.reset()
         for y in range(len(self.map)):
             for x in range(len(self.map[0])):
                 cell = self.map[y][x]
