@@ -39,6 +39,8 @@ class Level:
         self.is_finished = False
         if self.pac is not None:
             self.pac.kill()
+        for enemy in self.enemies:
+            enemy.kill()
         self.current_score.reset()
         self._create_level()
 
@@ -48,7 +50,25 @@ class Level:
     def _increase_score(self):
         self.current_score.increase()
 
-    def move_pac(self, direction):
+    def move_enemies(self):
+        for enemy in self.enemies:
+            enemy.move(self.walls)
+
+    def _check_collisions(self):
+        if self.pac.ephemeral:
+            return
+        if self._check_collision(self.nuggets, True):
+            self.current_score.increase()
+            if len(self.nuggets) == 0:
+                self.is_finished = True
+
+        if self._check_collision(self.enemies):
+            self.pac.lives -= 1
+            self.pac.ephemeral = True
+            if self.pac.lives == 0:
+                self.is_finished = True
+
+    def _move_pac(self, direction):
         d_x, d_y = 0, 0
         if direction == pygame.K_LEFT:
             d_x, d_y = -CELL_SIZE, 0
@@ -61,16 +81,11 @@ class Level:
 
         if d_x or d_y:
             self.pac.rect.move_ip(d_x, d_y)
-
             if self._check_collision(self.walls):
                 self.pac.rect.move_ip(-d_x, -d_y)
 
-            if self._check_collision(self.nuggets, True):
-                self.current_score.increase()
-                if len(self.nuggets) == 0:
-                    self.is_finished = True
-
-            if self._check_collision(self.enemies):
-                self.pac.lives -= 1
-                if self.pac.lives == 0:
-                    self.is_finished = True
+    def do_update(self, direction, timedelta):
+        self._move_pac(direction)
+        self._check_collisions()
+        if self.pac.ephemeral:
+            self.pac.count_down(timedelta)

@@ -5,10 +5,10 @@ from constants import PLAYER_ALREADY_EXISTS, PLAYER_NOT_FOUND
 
 from models.player import Player
 from repositories.player_repository import PlayerRepository
+from game.enums import ScreenName
 from game.menus.screens.landing_screen import LandingScreen
 from game.menus.screens.login_screen import LoginScreen
 from game.menus.screens.create_player_screen import CreatePlayerScreen
-from game.menus.screens.screen_names import ScreenName
 
 
 class LoginMenu:

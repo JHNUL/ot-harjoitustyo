@@ -14,3 +14,11 @@ class Pac(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+        self.ephemeral = False
+        self.timer = 1000
+
+    def count_down(self, value):
+        self.timer -= value
+        if self.timer < 0:
+            self.ephemeral = False
+            self.timer = 1000
