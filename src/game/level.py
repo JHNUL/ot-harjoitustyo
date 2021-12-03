@@ -5,7 +5,6 @@ from game.sprites.pac import Pac
 from game.sprites.wall import Wall
 from models.score import Score
 from utils import normalize
-from constants import CELL_SIZE
 
 
 class Level:
@@ -35,24 +34,11 @@ class Level:
 
         self.sprites.add(self.pac, self.walls, self.nuggets, self.enemies)
 
-    def reset(self):
-        self.is_finished = False
-        if self.pac is not None:
-            self.pac.kill()
-        for enemy in self.enemies:
-            enemy.kill()
-        self.current_score.reset()
-        self._create_level()
-
     def _check_collision(self, sprites, do_kill=False):
         return len(pygame.sprite.spritecollide(self.pac, sprites, do_kill))
 
     def _increase_score(self):
         self.current_score.increase()
-
-    def move_enemies(self):
-        for enemy in self.enemies:
-            enemy.move(self.walls)
 
     def _check_collisions(self):
         if self.pac.ephemeral:
@@ -68,24 +54,21 @@ class Level:
             if self.pac.lives == 0:
                 self.is_finished = True
 
-    def _move_pac(self, direction):
-        d_x, d_y = 0, 0
-        if direction == pygame.K_LEFT:
-            d_x, d_y = -CELL_SIZE, 0
-        elif direction == pygame.K_RIGHT:
-            d_x, d_y = CELL_SIZE, 0
-        elif direction == pygame.K_UP:
-            d_x, d_y = 0, -CELL_SIZE
-        elif direction == pygame.K_DOWN:
-            d_x, d_y = 0, CELL_SIZE
+    def reset(self):
+        self.is_finished = False
+        if self.pac is not None:
+            self.pac.kill()
+        for enemy in self.enemies:
+            enemy.kill()
+        self.current_score.reset()
+        self._create_level()
 
-        if d_x or d_y:
-            self.pac.rect.move_ip(d_x, d_y)
-            if self._check_collision(self.walls):
-                self.pac.rect.move_ip(-d_x, -d_y)
+    def move_enemies(self):
+        for enemy in self.enemies:
+            enemy.move(self.walls)
 
     def do_update(self, direction, timedelta):
-        self._move_pac(direction)
+        self.pac.move(direction, self.walls)
         self._check_collisions()
         if self.pac.ephemeral:
             self.pac.count_down(timedelta)
