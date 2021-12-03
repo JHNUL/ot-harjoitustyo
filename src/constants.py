@@ -14,6 +14,8 @@ SCREEN_TITLE_GAME_OVER = "Game over!"
 """Screen labels"""
 PLAYER_NOT_FOUND = "Player {} not found!"
 PLAYER_ALREADY_EXISTS = "Player {} already exists!"
+PLAYER_WON = "You Won!"
+PLAYER_LOST = "You Lost!"
 
 """Button texts"""
 BTN_TEXT_LOGIN = "Login"

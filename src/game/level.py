@@ -17,11 +17,10 @@ class Level:
         self.sprites = pygame.sprite.Group()
         self.enemies = pygame.sprite.Group()
         self.current_score = score
-        self.create_level()
+        self.is_finished = False
+        self._create_level()
 
-    def create_level(self, reset_score=True):
-        if reset_score:
-            self.current_score.reset()
+    def _create_level(self):
         for y in range(len(self.map)):
             for x in range(len(self.map[0])):
                 cell = self.map[y][x]
@@ -35,6 +34,13 @@ class Level:
                     self.enemies.add(Enemy(normalize(x), normalize(y)))
 
         self.sprites.add(self.pac, self.walls, self.nuggets, self.enemies)
+
+    def reset(self):
+        self.is_finished = False
+        if self.pac is not None:
+            self.pac.kill()
+        self.current_score.reset()
+        self._create_level()
 
     def _check_collision(self, sprites, do_kill=False):
         return len(pygame.sprite.spritecollide(self.pac, sprites, do_kill))
@@ -61,6 +67,10 @@ class Level:
 
             if self._check_collision(self.nuggets, True):
                 self.current_score.increase()
+                if len(self.nuggets) == 0:
+                    self.is_finished = True
 
             if self._check_collision(self.enemies):
                 self.pac.lives -= 1
+                if self.pac.lives == 0:
+                    self.is_finished = True

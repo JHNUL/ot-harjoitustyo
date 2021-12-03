@@ -66,7 +66,7 @@ def main():
             pygame.display.flip()
             continue
 
-        if not level.pac.lives:
+        if level.is_finished:
             game_over_menu.update(events)
             game_over_menu.draw(surface)
             pygame.display.flip()
