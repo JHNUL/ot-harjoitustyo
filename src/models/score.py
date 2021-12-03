@@ -7,3 +7,6 @@ class Score:
 
     def increase(self, amount=1):
         self.value += amount
+
+    def reset(self):
+        self.value = 0
