@@ -1,4 +1,4 @@
-from pygame_menu import events
+import pygame
 
 import constants as const
 from game.enums import ScreenName
@@ -15,7 +15,7 @@ class LandingScreen(BaseScreen):
         self.menu.add.button(const.BTN_TEXT_LOGIN, self._login_btn_callback)
         self.menu.add.button(const.BTN_TEXT_CREATE_PLAYER,
                              self._create_player_btn_callback)
-        self.menu.add.button(const.BTN_TEXT_QUIT, events.EXIT)
+        self.menu.add.button(const.BTN_TEXT_QUIT, pygame.QUIT)
 
     def _login_btn_callback(self):
         self._set_screen(ScreenName.LOGIN)

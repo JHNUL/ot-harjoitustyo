@@ -1,4 +1,4 @@
-from pygame_menu import events
+import pygame
 
 import constants as const
 from game.enums import ScreenName
@@ -30,4 +30,4 @@ class CreatePlayerScreen(BaseScreen):
         self.menu.add.button(const.BTN_TEXT_CREATE_PLAYER,
                              self._create_player_btn_callback)
         self.menu.add.button(const.BTN_TEXT_BACK, self._back_button_callback)
-        self.menu.add.button(const.BTN_TEXT_QUIT, events.EXIT)
+        self.menu.add.button(const.BTN_TEXT_QUIT, pygame.QUIT)

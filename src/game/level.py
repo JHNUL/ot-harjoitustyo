@@ -67,8 +67,9 @@ class Level:
         for enemy in self.enemies:
             enemy.move(self.walls)
 
-    def do_update(self, direction, timedelta):
-        self.pac.move(direction, self.walls)
+    def do_update(self, direction=None, timedelta=0):
+        if direction is not None:
+            self.pac.move(direction, self.walls)
         self._check_collisions()
         if self.pac.ephemeral:
             self.pac.count_down(timedelta)

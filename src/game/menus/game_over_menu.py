@@ -1,4 +1,5 @@
 from pygame import Surface
+import pygame
 from pygame_menu import Menu, events
 from game.level import Level
 import constants as const
@@ -30,8 +31,8 @@ class GameOverMenu:
         self.player_lost_screen.add.label(const.PLAYER_LOST)
         self.player_lost_screen.add.button(
             const.BTN_TEXT_NEW_GAME, self._new_game_callback)
-        self.player_lost_screen.add.button(const.BTN_TEXT_QUIT, events.EXIT)
+        self.player_lost_screen.add.button(const.BTN_TEXT_QUIT, pygame.QUIT)
         self.player_won_screen.add.label(const.PLAYER_WON)
         self.player_won_screen.add.button(
             const.BTN_TEXT_NEW_GAME, self._new_game_callback)
-        self.player_won_screen.add.button(const.BTN_TEXT_QUIT, events.EXIT)
+        self.player_won_screen.add.button(const.BTN_TEXT_QUIT, pygame.QUIT)

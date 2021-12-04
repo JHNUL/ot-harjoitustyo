@@ -37,6 +37,6 @@ class Pac(pygame.sprite.Sprite):
 
     def count_down(self, value):
         self.timer -= value
-        if self.timer < 0:
+        if self.timer <= 0:
             self.ephemeral = False
             self.timer = 1000

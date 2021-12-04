@@ -1,4 +1,4 @@
-from pygame_menu import events
+import pygame
 
 import constants as const
 from game.enums import ScreenName
@@ -29,4 +29,4 @@ class LoginScreen(BaseScreen):
             const.INPUT_LABEL_PLAYER_NAME, onchange=self._set_name)
         self.menu.add.button(const.BTN_TEXT_LOGIN, self._login_btn_callback)
         self.menu.add.button(const.BTN_TEXT_BACK, self._back_button_callback)
-        self.menu.add.button(const.BTN_TEXT_QUIT, events.EXIT)
+        self.menu.add.button(const.BTN_TEXT_QUIT, pygame.QUIT)

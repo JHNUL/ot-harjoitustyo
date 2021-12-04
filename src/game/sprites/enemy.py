@@ -1,6 +1,6 @@
 import os
-import pygame
 from random import choice
+import pygame
 from constants import CELL_SIZE
 from game.enums import Direction
 from utils import get_random_direction
@@ -59,9 +59,15 @@ class Enemy(pygame.sprite.Sprite):
 
         return [x[0] for x in allowed_dirs.items() if x[1]]
 
-    def move(self, walls):
+    def move(self, walls, direction: Direction = None):
 
-        self.direction = choice(self._get_allowed_directions(walls))
+        if not direction:
+            self.direction = choice(self._get_allowed_directions(walls))
+        else:
+            # this is here so that enemy movement
+            # can be tested in a deterministic way
+            self.direction = direction
+
         d_x, d_y = 0, 0
         if self.direction == Direction.LEFT:
             d_x, d_y = -CELL_SIZE, 0
@@ -73,3 +79,6 @@ class Enemy(pygame.sprite.Sprite):
             d_x, d_y = 0, CELL_SIZE
 
         self.rect.move_ip(d_x, d_y)
+
+        if len(pygame.sprite.spritecollide(self, walls, False)):
+            self.rect.move_ip(-d_x, -d_y)
