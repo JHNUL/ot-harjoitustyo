@@ -3,6 +3,8 @@ import pygame
 from game.level import Level
 from game.enums import Direction
 from models.score import Score
+from repositories.score_repository import ScoreRepository
+from db_connection import get_db_connection
 from utils import normalize
 
 
@@ -16,8 +18,9 @@ TEST_MAP = [[1, 1, 1, 1, 1, 1],
 
 class TestLevelWithoutEnemy(unittest.TestCase):
     def setUp(self):
-        self.score = Score(0)
-        self.level = Level(TEST_MAP, self.score)
+        self.score = Score(value=0, player_id=5)
+        self.score_repo = ScoreRepository(get_db_connection())
+        self.level = Level(TEST_MAP, self.score, self.score_repo)
 
     def _move_pac(self, direction, times=1):
         loops = 0
@@ -76,8 +79,9 @@ TEST_MAP_WITH_ENEMY = [[1, 1, 1, 1, 1, 1],
 
 class TestLevelWithEnemy(unittest.TestCase):
     def setUp(self):
-        self.score = Score(0)
-        self.level = Level(TEST_MAP_WITH_ENEMY, self.score)
+        self.score = Score(value=0)
+        self.score_repo = ScoreRepository(get_db_connection())
+        self.level = Level(TEST_MAP_WITH_ENEMY, self.score, self.score_repo)
         self.enemy = [x for x in self.level.enemies][0]
 
     def _move_pac(self, direction, times=1):

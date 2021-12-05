@@ -1,14 +1,16 @@
+from datetime import datetime
 import pygame
 from game.sprites.enemy import Enemy
 from game.sprites.nugget import Nugget
 from game.sprites.pac import Pac
 from game.sprites.wall import Wall
 from models.score import Score
+from repositories.score_repository import ScoreRepository
 from utils import normalize
 
 
 class Level:
-    def __init__(self, level_map, score: Score):
+    def __init__(self, level_map, score: Score, score_repository: ScoreRepository):
         self.map = level_map
         self.pac = None
         self.walls = pygame.sprite.Group()
@@ -17,6 +19,7 @@ class Level:
         self.enemies = pygame.sprite.Group()
         self.current_score = score
         self.is_finished = False
+        self.score_repo = score_repository
         self._create_level()
 
     def _create_level(self):
@@ -47,6 +50,8 @@ class Level:
             self.current_score.increase()
             if len(self.nuggets) == 0:
                 self.is_finished = True
+                self.current_score.set_timestamp(datetime.now().timestamp())
+                self.score_repo.add_score(self.current_score)
 
         if self._check_collision(self.enemies):
             self.pac.lives -= 1
@@ -68,7 +73,7 @@ class Level:
             enemy.move(self.walls)
 
     def do_update(self, direction=None, timedelta=0):
-        if direction is not None:
+        if direction:
             self.pac.move(direction, self.walls)
         self._check_collisions()
         if self.pac.ephemeral:

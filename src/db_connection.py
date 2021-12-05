@@ -13,5 +13,5 @@ connection = sqlite3.connect(os.path.join(dirname, "..", "data", db_file))
 connection.row_factory = sqlite3.Row
 
 
-def get_db_connection():
+def get_db_connection() -> sqlite3.Connection:
     return connection

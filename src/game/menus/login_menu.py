@@ -4,6 +4,7 @@ from pygame import Surface
 from constants import PLAYER_ALREADY_EXISTS, PLAYER_NOT_FOUND
 
 from models.player import Player
+from models.score import Score
 from repositories.player_repository import PlayerRepository
 from game.enums import ScreenName
 from game.menus.screens.landing_screen import LandingScreen
@@ -12,8 +13,9 @@ from game.menus.screens.create_player_screen import CreatePlayerScreen
 
 
 class LoginMenu:
-    def __init__(self, player: Player, player_repository: PlayerRepository):
+    def __init__(self, player: Player, player_repository: PlayerRepository, score: Score):
         self._player = player
+        self._score = score
         self._player_repository = player_repository
         self._set_screen(ScreenName.LANDING)
 
@@ -26,6 +28,7 @@ class LoginMenu:
         res = self._player_repository.set_last_login(player)
         if res:
             self._player.set_player(player)
+            self._score.set_player_id(player)
 
     def _create_player_callback(self, name):
         player = Player(name=name)

@@ -1,4 +1,5 @@
 import unittest
+from models.player import Player
 from models.score import Score
 
 
@@ -20,3 +21,16 @@ class TestScore(unittest.TestCase):
         self.assertEqual(score.value, 100)
         score.increase(20)
         self.assertEqual(score.value, 120)
+
+    def test_set_player_id(self):
+        score = Score(100, timestamp=123.123)
+        playah = Player(id_=99)
+        self.assertEqual(score.player_id, None)
+        score.set_player_id(playah)
+        self.assertEqual(score.player_id, 99)
+
+    def test_set_timestamp(self):
+        score = Score(100)
+        self.assertEqual(score.timestamp, None)
+        score.set_timestamp(666.777)
+        self.assertEqual(score.timestamp, 666.777)

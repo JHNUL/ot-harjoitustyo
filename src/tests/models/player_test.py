@@ -10,9 +10,10 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(player.last_login, None)
 
     def test_initialize_player_with_arguments(self):
-        player = Player(name='mock')
+        player = Player(name='mock', id_=5, last_login=123.123)
         self.assertEqual(player.name, 'mock')
-        self.assertEqual(player.last_login, None)
+        self.assertEqual(player.id, 5)
+        self.assertEqual(player.last_login, 123.123)
 
     def test_set_login_time(self):
         player = Player()

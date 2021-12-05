@@ -7,13 +7,14 @@ from game.menus.login_menu import LoginMenu
 from models.score import Score
 from models.player import Player
 from repositories.player_repository import PlayerRepository
+from repositories.score_repository import ScoreRepository
 from db_connection import get_db_connection
 from init_db import initialize_db
 from utils import normalize
 
 MAP = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1],
     [1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1],
     [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
     [1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1],
@@ -23,7 +24,7 @@ MAP = [
     [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1],
     [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1],
     [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1],
-    [1, 0, 0, 0, 0, 0, 1, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1],
+    [1, 0, 0, 0, 0, 0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ]
 
@@ -46,14 +47,18 @@ def main():
 
     player = Player()
     score = Score(0)
-    level = Level(MAP, score)
-    login_menu = LoginMenu(player, PlayerRepository(get_db_connection()))
+    player_repository = PlayerRepository(get_db_connection())
+    score_repository = ScoreRepository(get_db_connection())
+    level = Level(level_map=MAP, score=score,
+                  score_repository=score_repository)
+    login_menu = LoginMenu(
+        player=player, player_repository=player_repository, score=score)
     game_over_menu = GameOverMenu(level)
     direction = None
     font = pygame.font.SysFont(None, 32)
     clock = pygame.time.Clock()
     while True:
-        timedelta = clock.tick(10)
+        timedelta = clock.tick(20)
         game_surface.fill(BG_COLOR)
         surface.fill(BG_COLOR)
         events = pygame.event.get()

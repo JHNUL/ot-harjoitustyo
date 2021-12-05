@@ -15,21 +15,26 @@ Kirjautuminen:
 - olemattomalla käyttäjätunnuksella kirjautumisesta ilmoitetaan ***tehty***
 
 Kirjautumisen jälkeen:
-- pelaaja näkee pelialustan ja leaderboardin, jossa listattu max 5 kappaletta parhaita tuloksia käyttäjätunnuksineen
+- pelaaja näkee *tuotantotasoisen* pelialustan ja leaderboardin, jossa listattu max 5 kappaletta parhaita tuloksia käyttäjätunnuksineen
+- pelikentällä on vihollisia, jotka liikkuvat näennäisen satunnaisesti ***tehty***
+- viholliseen törmäämisestä pelaaja menettää yhden elämän ***tehty***
+- viholliseen törmäämisen jälkeen Pac on hetken aikaa turvassa mutta ei voi kerätä nappuloita ***tehty***
 - pelaaja voi käynnistää pelin ja kontrolloida pac-ötökkää nuolinäppäimillä ***tehty***
 - pelaaja voi kerätä nappuloita ***tehty***
 - kerättyään supernappulan pelaaja voi syödä vihollisia tietyn ajan
-- pelaaja näkee reaaliaikaisen pistesaldonsa
-- pelaaja näkee jäljellä olevat elämänsä
-- pelin päätyttyä pelaajan pistesaldo näkyy leaderboardissa, jos se riittää sinne pääsyyn
+- pelaaja näkee reaaliaikaisen pistesaldonsa ***tehty***
+- pelaaja näkee jäljellä olevat elämänsä ***tehty***
+- pelin läpäistyä pelaajan pistesaldo näkyy leaderboardissa, jos se riittää sinne pääsyyn
+- peli loppuu jos pelaajan elämät loppuvat ***tehty***
 
 
 ## Toimintaympäristö
-Sovelluksen tulee toimia Linux ja macOS-käyttöjärjestelmillä. Tuettu Python-versio on >= 3.8. Pelaajien käyttäjätunnukset ja pelikertojen tulokset tallentuvat sqlite-tietokantaan (tai tiedostoon).
+Sovelluksen tulee toimia Linux ja macOS-käyttöjärjestelmillä. Tuettu Python-versio on >= 3.8. Pelaajien käyttäjätunnukset ja pelikertojen tulokset tallentuvat sqlite-tietokantaan.
 
 ## Jatkokehitysideat
 - pelaaja voi kirjautua ulos jolloin sovellus palaa kirjautumisnäkymään
 - pelissä on useampia tasoja
+- peliin voi "importata" itse luodun tason
 - pelissä on vaikeusaste, joka vaikuttaa esimerkiksi vihollisten määrään, nopeuteen ja uudelleenilmestymisen tiheyteen
 - vaikeusaste kasvaa joka tasolla
 - pelaaja voi konfiguroida vaikeusasteen alkutason
