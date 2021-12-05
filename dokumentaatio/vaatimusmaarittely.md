@@ -9,10 +9,9 @@ Pelaaja
 ### Toiminnallisuuden kuvaus (MVP)
 Tunnuksien luominen:
 - pelaajan täytyy luoda käyttäjätunnus ***tehty***
-- käyttäjätunnuksen on oltava uniikki, järjestelmä ilmoittaa duplikaateista ***tehty***
 
 Kirjautuminen:
-- olemattomalla käyttäjätunnuksella kirjautumisesta ilmoitetaan ***tehty***
+- Kirjautuminen tapahtuu syöttämällä käyttäjätunnus, mitään salasanoja ei ole. Jos käyttäjätunnusta ei ole olemassa, se tallennetaan kirjautumisen yhteydessä.
 
 Kirjautumisen jälkeen:
 - pelaaja näkee *tuotantotasoisen* pelialustan ja leaderboardin, jossa listattu max 5 kappaletta parhaita tuloksia käyttäjätunnuksineen

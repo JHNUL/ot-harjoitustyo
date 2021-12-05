@@ -15,10 +15,10 @@ class TestPlayerRepository(unittest.TestCase):
         self.connection.cursor().execute("DELETE FROM Scores;")
         self.connection.commit()
 
-    def test_add_player_returns_true_when_no_error(self):
+    def test_add_player_returns_player_when_no_error(self):
         repo = PlayerRepository(self.connection)
         res = repo.add_player(self.test_player)
-        self.assertTrue(res)
+        self.assertIsInstance(res, Player)
         self.clear_db()
 
     def test_add_player_adds_one_player_to_db(self):
@@ -52,34 +52,10 @@ class TestPlayerRepository(unittest.TestCase):
         self.assertEqual(player, None)
         self.clear_db()
 
-    def test_set_last_login_returns_true(self):
+    def test_update_player_returns_true(self):
         repo = PlayerRepository(self.connection)
         repo.add_player(self.test_player)
         self.test_player.set_login_time(datetime.now().timestamp())
-        res = repo.set_last_login(self.test_player)
+        res = repo.update_player(self.test_player)
         self.assertTrue(res)
-        self.clear_db()
-
-    def test_set_last_login_returns_false_when_no_player_found(self):
-        repo = PlayerRepository(self.connection)
-        repo.add_player(self.test_player)
-        not_added = Player("new_player")
-        not_added.set_login_time(datetime.now().timestamp())
-        res = repo.set_last_login(not_added)
-        self.assertFalse(res)
-        self.clear_db()
-
-    def test_set_last_login_sets_timestamp(self):
-        repo = PlayerRepository(self.connection)
-        repo.add_player(self.test_player)
-        cursor = self.connection.cursor().execute(
-            "SELECT last_login FROM Players WHERE name = 'test_player';")
-        res = cursor.fetchone()
-        self.assertIsNone(res[0])
-        self.test_player.set_login_time(datetime.now().timestamp())
-        repo.set_last_login(self.test_player)
-        cursor = self.connection.cursor().execute(
-            "SELECT last_login FROM Players WHERE name = 'test_player';")
-        res = cursor.fetchone()
-        self.assertIsInstance(res[0], float)
         self.clear_db()

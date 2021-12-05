@@ -60,19 +60,23 @@ class Level:
                 self.is_finished = True
 
     def reset(self):
-        self.is_finished = False
         if self.pac is not None:
             self.pac.kill()
         for enemy in self.enemies:
             enemy.kill()
         self.current_score.reset()
         self._create_level()
+        self.is_finished = False
 
     def move_enemies(self):
+        if self.is_finished:
+            return
         for enemy in self.enemies:
             enemy.move(self.walls)
 
     def do_update(self, direction=None, timedelta=0):
+        if self.is_finished:
+            return
         if direction:
             self.pac.move(direction, self.walls)
         self._check_collisions()

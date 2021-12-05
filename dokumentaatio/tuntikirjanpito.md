@@ -14,5 +14,5 @@
 | 29.11       | 2           | viikko 4 palautuksen viimeistely |
 | 3.12        | 6           | harjoitustyön työstöä viikko 5 |
 | 4.12        | 2           | harjoitustyön työstöä viikko 5 |
-| 5.12        | 2           | harjoitustyön työstöä viikko 5 |
-|yht| 42  |
+| 5.12        | 5           | harjoitustyön työstöä viikko 5, refaktoria |
+|yht| 45  |

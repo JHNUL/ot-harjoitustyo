@@ -14,7 +14,7 @@ from utils import normalize
 
 MAP = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1],
     [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
     [1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1],
@@ -24,7 +24,7 @@ MAP = [
     [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1],
     [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1],
     [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1],
-    [1, 0, 0, 0, 0, 0, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1],
+    [1, 0, 0, 0, 0, 0, 1, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ]
 
@@ -57,10 +57,13 @@ def main():
     direction = None
     font = pygame.font.SysFont(None, 32)
     clock = pygame.time.Clock()
+
     while True:
-        timedelta = clock.tick(20)
+        timedelta = clock.tick(10)
         game_surface.fill(BG_COLOR)
         surface.fill(BG_COLOR)
+        login_menu.start(surface)
+
         events = pygame.event.get()
         for event in events:
             if event.type == pygame.QUIT:
@@ -73,17 +76,9 @@ def main():
             if event.type == move_enemies:
                 level.move_enemies()
 
-        if player.last_login is None:
-            login_menu.update(events)
-            login_menu.draw(surface)
-            pygame.display.flip()
-            continue
-
         if level.is_finished:
-            game_over_menu.update(events)
-            game_over_menu.draw(surface)
-            pygame.display.flip()
-            continue
+            direction = None
+            game_over_menu.start(surface)
 
         level.do_update(direction, timedelta)
 

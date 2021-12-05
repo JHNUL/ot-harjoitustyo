@@ -12,13 +12,14 @@ SCREEN_TITLE_GAME = "PACMAN"
 SCREEN_TITLE_GAME_OVER = "Game over!"
 
 """Screen labels"""
+WELCOME = "Welcome! Login or create player"
 PLAYER_NOT_FOUND = "Player {} not found!"
 PLAYER_ALREADY_EXISTS = "Player {} already exists!"
 PLAYER_WON = "You Won!"
 PLAYER_LOST = "You Lost!"
 
 """Button texts"""
-BTN_TEXT_LOGIN = "Login"
+BTN_TXT_START = "Start"
 BTN_TEXT_CREATE_PLAYER = "Create player"
 BTN_TEXT_NEW_GAME = "New game"
 BTN_TEXT_QUIT = "Quit"
@@ -26,7 +27,6 @@ BTN_TEXT_BACK = "Back"
 
 """Text input labels"""
 INPUT_LABEL_PLAYER_NAME = "Player name:"
-INPUT_LABEL_SCREEN_NAME = "Screen name:"
 
 """Environment"""
 PRODUCTION = "prod"
