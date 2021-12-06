@@ -20,6 +20,14 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.y = y
         self.direction = get_random_direction()
 
+    def _can_move(self, walls, x, y):
+        can = True
+        self.rect.move_ip(x, y)
+        if len(pygame.sprite.spritecollide(self, walls, False)):
+            can = False
+        self.rect.move_ip(-x, -y)
+        return can
+
     def _get_allowed_directions(self, walls) -> list:
         allowed_dirs = {
             Direction.UP: True,
@@ -37,36 +45,20 @@ class Enemy(pygame.sprite.Sprite):
             allowed_dirs[Direction.RIGHT] = False
 
         if allowed_dirs[Direction.UP]:
-            self.rect.move_ip(0, -CELL_SIZE)
-            if len(pygame.sprite.spritecollide(self, walls, False)):
-                allowed_dirs[Direction.UP] = False
-            self.rect.move_ip(0, CELL_SIZE)
+            allowed_dirs[Direction.UP] = self._can_move(walls, 0, -CELL_SIZE)
         if allowed_dirs[Direction.RIGHT]:
-            self.rect.move_ip(CELL_SIZE, 0)
-            if len(pygame.sprite.spritecollide(self, walls, False)):
-                allowed_dirs[Direction.RIGHT] = False
-            self.rect.move_ip(-CELL_SIZE, 0)
+            allowed_dirs[Direction.RIGHT] = self._can_move(walls, CELL_SIZE, 0)
         if allowed_dirs[Direction.DOWN]:
-            self.rect.move_ip(0, CELL_SIZE)
-            if len(pygame.sprite.spritecollide(self, walls, False)):
-                allowed_dirs[Direction.DOWN] = False
-            self.rect.move_ip(0, -CELL_SIZE)
+            allowed_dirs[Direction.DOWN] = self._can_move(walls, 0, CELL_SIZE)
         if allowed_dirs[Direction.LEFT]:
-            self.rect.move_ip(-CELL_SIZE, 0)
-            if len(pygame.sprite.spritecollide(self, walls, False)):
-                allowed_dirs[Direction.LEFT] = False
-            self.rect.move_ip(CELL_SIZE, 0)
+            allowed_dirs[Direction.LEFT] = self._can_move(walls, -CELL_SIZE, 0)
 
         return [x[0] for x in allowed_dirs.items() if x[1]]
 
     def move(self, walls, direction: Direction = None):
 
-        if not direction:
-            self.direction = choice(self._get_allowed_directions(walls))
-        else:
-            # this is here so that enemy movement
-            # can be tested in a deterministic way
-            self.direction = direction
+        self.direction = direction if direction else choice(
+            self._get_allowed_directions(walls))
 
         d_x, d_y = 0, 0
         if self.direction == Direction.LEFT:

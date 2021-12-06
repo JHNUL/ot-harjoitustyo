@@ -68,17 +68,17 @@ class Level:
         self._create_level()
         self.is_finished = False
 
-    def move_enemies(self):
-        if self.is_finished:
-            return
+    def _move_enemies(self):
         for enemy in self.enemies:
             enemy.move(self.walls)
 
-    def do_update(self, direction=None, timedelta=0):
+    def do_update(self, move_enemies=False, direction=None):
         if self.is_finished:
             return
+        if move_enemies:
+            self._move_enemies()
         if direction:
             self.pac.move(direction, self.walls)
         self._check_collisions()
         if self.pac.ephemeral:
-            self.pac.count_down(timedelta)
+            self.pac.count_down()

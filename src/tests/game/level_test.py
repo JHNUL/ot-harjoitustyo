@@ -25,7 +25,7 @@ class TestLevelWithoutEnemy(unittest.TestCase):
     def _move_pac(self, direction, times=1):
         loops = 0
         while loops < times:
-            self.level.do_update(direction)
+            self.level.do_update(direction=direction)
             loops += 1
 
     def test_pac_can_move_along_corridor(self):
@@ -87,7 +87,7 @@ class TestLevelWithEnemy(unittest.TestCase):
     def _move_pac(self, direction, times=1):
         loops = 0
         while loops < times:
-            self.level.do_update(direction)
+            self.level.do_update(direction=direction)
             loops += 1
 
     def test_enemies_can_move(self):
@@ -126,40 +126,44 @@ class TestLevelWithEnemy(unittest.TestCase):
 
     def test_timer_reduces_with_update_when_in_ephemeral_mode(self):
         self.level.pac.ephemeral = True
-        self.assertEqual(self.level.pac.timer, 1000)
-        self.level.do_update(timedelta=100)
-        self.assertEqual(self.level.pac.timer, 900)
+        self.assertEqual(self.level.pac.timer, 20)
+        self.level.do_update()
+        self.assertEqual(self.level.pac.timer, 19)
 
     def test_timer_does_not_reduce_with_update_when_not_in_ephemeral_mode(self):
         self.assertEqual(self.level.pac.ephemeral, False)
-        self.assertEqual(self.level.pac.timer, 1000)
-        self.level.do_update(timedelta=100)
-        self.assertEqual(self.level.pac.timer, 1000)
+        self.assertEqual(self.level.pac.timer, 20)
+        self.level.do_update()
+        self.assertEqual(self.level.pac.timer, 20)
 
     def test_ephemeral_mode_turns_off_when_timer_is_zero_or_less(self):
         self.level.pac.ephemeral = True
-        self.assertEqual(self.level.pac.timer, 1000)
-        self.level.do_update(timedelta=1100)
+        self.assertEqual(self.level.pac.timer, 20)
+        for i in range(20):
+            self.level.do_update()
         self.assertEqual(self.level.pac.ephemeral, False)
 
     def test_timer_is_reset_when_value_is_zero_or_less(self):
         self.level.pac.ephemeral = True
-        self.assertEqual(self.level.pac.timer, 1000)
-        self.level.do_update(timedelta=100)
-        self.assertEqual(self.level.pac.timer, 900)
-        self.level.do_update(timedelta=999)
-        self.assertEqual(self.level.pac.timer, 1000)
+        self.assertEqual(self.level.pac.timer, 20)
+        self.level.do_update()
+        self.assertEqual(self.level.pac.timer, 19)
+        for i in range(20):
+            self.level.do_update()
+        self.assertEqual(self.level.pac.timer, 20)
 
     def test_losing_last_life_ends_level(self):
         self.assertEqual(self.level.is_finished, False)
         self.assertEqual(self.level.pac.lives, 3)
         self._move_pac(pygame.K_LEFT, 2)
         self.assertEqual(self.level.pac.lives, 2)
-        self.level.do_update(timedelta=1000)
+        for i in range(20):
+            self.level.do_update()
         self._move_pac(pygame.K_DOWN)
         self._move_pac(pygame.K_UP)
         self.assertEqual(self.level.pac.lives, 1)
-        self.level.do_update(timedelta=1000)
+        for i in range(20):
+            self.level.do_update()
         self._move_pac(pygame.K_DOWN)
         self._move_pac(pygame.K_UP)
         self.assertEqual(self.level.pac.lives, 0)

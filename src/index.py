@@ -1,93 +1,49 @@
-import sys
 import pygame
-from constants import BG_COLOR, CELL_SIZE, SCREEN_TITLE_GAME, WHITE
+from constants import CELL_SIZE, DISPLAY_HEIGHT, DISPLAY_WIDTH, MAP, SCREEN_TITLE_GAME, MOVE_ENEMIES
 from game.level import Level
 from game.menus.game_over_menu import GameOverMenu
 from game.menus.login_menu import LoginMenu
+from main_loop import MainLoop
 from models.score import Score
 from models.player import Player
+from renderer import Renderer
 from repositories.player_repository import PlayerRepository
 from repositories.score_repository import ScoreRepository
 from db_connection import get_db_connection
 from init_db import initialize_db
-from utils import normalize
-
-MAP = [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1],
-    [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
-    [1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1],
-    [1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1],
-    [1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1],
-    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1],
-    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1],
-    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1],
-    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1],
-    [1, 0, 0, 0, 0, 0, 1, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-]
-
-
-def _init_surfaces(level_map):
-    display_width = normalize(len(level_map[0]))
-    display_height = normalize(len(level_map)+1)
-    surface = pygame.display.set_mode((display_width, display_height))
-    game_surface = pygame.Surface((display_width, display_height-CELL_SIZE))
-    return (surface, game_surface)
 
 
 def main():
     initialize_db()
+    connection = get_db_connection()
+
     pygame.init()
     pygame.display.set_caption(SCREEN_TITLE_GAME)
-    surface, game_surface = _init_surfaces(MAP)
-    move_enemies = pygame.USEREVENT+1
-    pygame.time.set_timer(move_enemies, 300)
+    pygame.time.set_timer(MOVE_ENEMIES, 300)
+    main_screen = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT))
+    game_screen = pygame.Surface((DISPLAY_WIDTH, DISPLAY_HEIGHT-CELL_SIZE))
+    clock = pygame.time.Clock()
+    font = pygame.font.SysFont('Segoe', 34)
 
     player = Player()
     score = Score(0)
-    player_repository = PlayerRepository(get_db_connection())
-    score_repository = ScoreRepository(get_db_connection())
+    player_repository = PlayerRepository(connection)
+    score_repository = ScoreRepository(connection)
     level = Level(level_map=MAP, score=score,
                   score_repository=score_repository)
     login_menu = LoginMenu(
         player=player, player_repository=player_repository, score=score)
     game_over_menu = GameOverMenu(level)
-    direction = None
-    font = pygame.font.SysFont(None, 32)
-    clock = pygame.time.Clock()
-
-    while True:
-        timedelta = clock.tick(10)
-        game_surface.fill(BG_COLOR)
-        surface.fill(BG_COLOR)
-        login_menu.start(surface)
-
-        events = pygame.event.get()
-        for event in events:
-            if event.type == pygame.QUIT:
-                sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key in [pygame.K_UP, pygame.K_RIGHT, pygame.K_DOWN, pygame.K_LEFT]:
-                    direction = event.key
-            if event.type == pygame.KEYUP:
-                direction = None
-            if event.type == move_enemies:
-                level.move_enemies()
-
-        if level.is_finished:
-            direction = None
-            game_over_menu.start(surface)
-
-        level.do_update(direction, timedelta)
-
-        txt = font.render(
-            f"SCORE: {level.current_score.value}, LIVES: {level.pac.lives}", True, WHITE)
-        level.sprites.draw(game_surface)
-        surface.blit(txt, (20, 20))
-        surface.blit(game_surface, (0, 50))
-        pygame.display.flip()
+    renderer = Renderer(
+        level=level,
+        font=font,
+        login_menu=login_menu,
+        game_over_menu=game_over_menu,
+        main_screen=main_screen,
+        game_screen=game_screen
+    )
+    game_loop = MainLoop(level=level, renderer=renderer, clock=clock)
+    game_loop.start()
 
 
 if __name__ == "__main__":
