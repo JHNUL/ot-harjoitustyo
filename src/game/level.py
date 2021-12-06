@@ -71,6 +71,7 @@ class Level:
     def _move_enemies(self):
         for enemy in self.enemies:
             enemy.move(self.walls)
+            self._check_collisions()
 
     def do_update(self, move_enemies=False, direction=None):
         if self.is_finished:
