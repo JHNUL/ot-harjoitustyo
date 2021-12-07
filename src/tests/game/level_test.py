@@ -5,6 +5,7 @@ from game.enums import Direction
 from models.score import Score
 from repositories.score_repository import ScoreRepository
 from db_connection import get_db_connection
+from services.score_service import ScoreService
 from utils import normalize
 
 
@@ -19,8 +20,8 @@ TEST_MAP = [[1, 1, 1, 1, 1, 1],
 class TestLevelWithoutEnemy(unittest.TestCase):
     def setUp(self):
         self.score = Score(value=0, player_id=5)
-        self.score_repo = ScoreRepository(get_db_connection())
-        self.level = Level(TEST_MAP, self.score, self.score_repo)
+        self.score_service = ScoreService(score_repository=ScoreRepository(get_db_connection()))
+        self.level = Level(TEST_MAP, self.score, self.score_service)
 
     def _move_pac(self, direction, times=1):
         loops = 0
@@ -50,13 +51,13 @@ class TestLevelWithoutEnemy(unittest.TestCase):
         self.assertEqual(self.score.value, 2)
 
     def test_nuggets_are_removed_from_group(self):
-        self.assertEqual(len(self.level.nuggets), 15)
+        self.assertEqual(len(self.level._nuggets), 15)
         self._move_pac(pygame.K_LEFT)
         self._move_pac(pygame.K_UP)
-        self.assertEqual(len(self.level.nuggets), 13)
+        self.assertEqual(len(self.level._nuggets), 13)
 
     def test_level_is_finished_when_all_nuggets_are_collected(self):
-        self.assertEqual(len(self.level.nuggets), 15)
+        self.assertEqual(len(self.level._nuggets), 15)
         self.assertEqual(self.level.is_finished, False)
         self._move_pac(pygame.K_LEFT, 2)
         self._move_pac(pygame.K_DOWN)
@@ -65,7 +66,7 @@ class TestLevelWithoutEnemy(unittest.TestCase):
         self._move_pac(pygame.K_LEFT, 3)
         self._move_pac(pygame.K_UP, 3)
         self._move_pac(pygame.K_RIGHT, 3)
-        self.assertEqual(len(self.level.nuggets), 0)
+        self.assertEqual(len(self.level._nuggets), 0)
         self.assertEqual(self.level.is_finished, True)
 
 
@@ -80,9 +81,9 @@ TEST_MAP_WITH_ENEMY = [[1, 1, 1, 1, 1, 1],
 class TestLevelWithEnemy(unittest.TestCase):
     def setUp(self):
         self.score = Score(value=0)
-        self.score_repo = ScoreRepository(get_db_connection())
-        self.level = Level(TEST_MAP_WITH_ENEMY, self.score, self.score_repo)
-        self.enemy = [x for x in self.level.enemies][0]
+        self.score_service = ScoreService(score_repository=ScoreRepository(get_db_connection()))
+        self.level = Level(TEST_MAP_WITH_ENEMY, self.score, self.score_service)
+        self.enemy = [x for x in self.level._enemies][0]
 
     def _move_pac(self, direction, times=1):
         loops = 0
@@ -93,17 +94,17 @@ class TestLevelWithEnemy(unittest.TestCase):
     def test_enemies_can_move(self):
         self.assertEqual(self.enemy.rect.x, normalize(1))
         self.assertEqual(self.enemy.rect.y, normalize(1))
-        self.enemy.move(self.level.walls, Direction.RIGHT)
-        self.enemy.move(self.level.walls, Direction.RIGHT)
+        self.enemy.move(self.level._walls, Direction.RIGHT)
+        self.enemy.move(self.level._walls, Direction.RIGHT)
         self.assertEqual(self.enemy.rect.x, normalize(3))
         self.assertEqual(self.enemy.rect.y, normalize(1))
 
     def test_enemies_cannot_move_through_walls(self):
         self.assertEqual(self.enemy.rect.x, normalize(1))
         self.assertEqual(self.enemy.rect.y, normalize(1))
-        self.enemy.move(self.level.walls, Direction.RIGHT)
-        self.enemy.move(self.level.walls, Direction.UP)
-        self.enemy.move(self.level.walls, Direction.UP)
+        self.enemy.move(self.level._walls, Direction.RIGHT)
+        self.enemy.move(self.level._walls, Direction.UP)
+        self.enemy.move(self.level._walls, Direction.UP)
         self.assertEqual(self.enemy.rect.x, normalize(2))
         self.assertEqual(self.enemy.rect.y, normalize(1))
 
@@ -114,8 +115,8 @@ class TestLevelWithEnemy(unittest.TestCase):
 
     def test_life_is_lost_when_enemy_moves_into_pac(self):
         self.assertEqual(self.level.pac.lives, 3)
-        self.enemy.move(self.level.walls, Direction.RIGHT)
-        self.enemy.move(self.level.walls, Direction.RIGHT)
+        self.enemy.move(self.level._walls, Direction.RIGHT)
+        self.enemy.move(self.level._walls, Direction.RIGHT)
         self.level.do_update()  # to check collisions
         self.assertEqual(self.level.pac.lives, 2)
 

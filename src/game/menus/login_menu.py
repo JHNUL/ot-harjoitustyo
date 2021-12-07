@@ -1,31 +1,23 @@
-from datetime import datetime
 from pygame import Surface, QUIT
 from pygame_menu import Menu
 
 import constants as const
 from models.player import Player
 from models.score import Score
-from repositories.player_repository import PlayerRepository
+from services.player_service import PlayerService
 
 
 class LoginMenu:
-    def __init__(self, player: Player, player_repository: PlayerRepository, score: Score):
+    def __init__(self, player: Player, player_service: PlayerService, score: Score):
         self._menu = Menu(const.SCREEN_TITLE_LANDING, 500, 300)
         self._player = player
         self._score = score
-        self._player_repository = player_repository
+        self._player_service = player_service
         self._name = None
         self._init_screen()
 
     def _start_btn_callback(self):
-        player = self._player_repository.find_player_by_name(self._name)
-        now = datetime.now().timestamp()
-        if player is None:
-            player = self._player_repository.add_player(
-                Player(name=self._name, last_login=now))
-        else:
-            player.set_login_time(now)
-            self._player_repository.update_player(player)
+        player = self._player_service.player_login(self._name)
         self._player.set_player(player)
         self._score.set_player_id(player)
         self._menu.disable()

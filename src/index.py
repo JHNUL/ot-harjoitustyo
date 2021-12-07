@@ -11,12 +11,11 @@ from repositories.player_repository import PlayerRepository
 from repositories.score_repository import ScoreRepository
 from db_connection import get_db_connection
 from init_db import initialize_db
+from services.player_service import PlayerService
+from services.score_service import ScoreService
 
 
 def main():
-    initialize_db()
-    connection = get_db_connection()
-
     pygame.init()
     pygame.display.set_caption(SCREEN_TITLE_GAME)
     pygame.time.set_timer(MOVE_ENEMIES, 300)
@@ -27,12 +26,13 @@ def main():
 
     player = Player()
     score = Score(0)
-    player_repository = PlayerRepository(connection)
-    score_repository = ScoreRepository(connection)
-    level = Level(level_map=MAP, score=score,
-                  score_repository=score_repository)
+    player_repository = PlayerRepository(get_db_connection())
+    score_repository = ScoreRepository(get_db_connection())
+    player_service = PlayerService(player_repository=player_repository)
+    score_service = ScoreService(score_repository=score_repository)
+    level = Level(level_map=MAP, score=score, score_service=score_service)
     login_menu = LoginMenu(
-        player=player, player_repository=player_repository, score=score)
+        player=player, player_service=player_service, score=score)
     game_over_menu = GameOverMenu(level)
     renderer = Renderer(
         level=level,
@@ -47,4 +47,5 @@ def main():
 
 
 if __name__ == "__main__":
+    initialize_db()
     main()
