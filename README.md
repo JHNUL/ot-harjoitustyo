@@ -48,3 +48,7 @@ Raportti muodostuu hakemistoon htmlcov.
 ```sh
 poetry run invoke lint
 ```
+
+## Releaset
+
+- [viikko 5](https://github.com/JHNUL/ot-harjoitustyo/releases/tag/viikko5)
