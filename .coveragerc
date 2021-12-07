@@ -8,4 +8,6 @@ omit = src/**/__init__.py,
   src/index.py,
   src/constants.py,
   src/game/menus/**,
-  src/game/sprites/**
+  src/game/sprites/**,
+  src/main_loop.py,
+  src/renderer.py
