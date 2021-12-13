@@ -7,6 +7,7 @@ from repositories.score_repository import ScoreRepository
 from db_connection import get_db_connection
 from services.score_service import ScoreService
 from utils import normalize
+from constants import MOVEMENTS
 
 
 TEST_MAP = [[1, 1, 1, 1, 1, 1],
@@ -32,40 +33,40 @@ class TestLevelWithoutEnemy(unittest.TestCase):
     def test_pac_can_move_along_corridor(self):
         self.assertEqual(self.level.pac.rect.x, normalize(4))
         self.assertEqual(self.level.pac.rect.y, normalize(2))
-        self._move_pac(pygame.K_LEFT)
-        self._move_pac(pygame.K_UP)
+        self._move_pac(MOVEMENTS[pygame.K_LEFT])
+        self._move_pac(MOVEMENTS[pygame.K_UP])
         self.assertEqual(self.level.pac.rect.x, normalize(3))
         self.assertEqual(self.level.pac.rect.y, normalize(1))
 
     def test_pac_cannot_move_through_walls(self):
         self.assertEqual(self.level.pac.rect.x, normalize(4))
         self.assertEqual(self.level.pac.rect.y, normalize(2))
-        self._move_pac(pygame.K_RIGHT, 2)
+        self._move_pac(MOVEMENTS[pygame.K_RIGHT], 2)
         self.assertEqual(self.level.pac.rect.x, normalize(4))
         self.assertEqual(self.level.pac.rect.y, normalize(2))
 
     def test_collecting_nuggets_increases_score(self):
         self.assertEqual(self.score.value, 0)
-        self._move_pac(pygame.K_LEFT)
-        self._move_pac(pygame.K_UP)
+        self._move_pac(MOVEMENTS[pygame.K_LEFT])
+        self._move_pac(MOVEMENTS[pygame.K_UP])
         self.assertEqual(self.score.value, 2)
 
     def test_nuggets_are_removed_from_group(self):
         self.assertEqual(len(self.level._nuggets), 15)
-        self._move_pac(pygame.K_LEFT)
-        self._move_pac(pygame.K_UP)
+        self._move_pac(MOVEMENTS[pygame.K_LEFT])
+        self._move_pac(MOVEMENTS[pygame.K_UP])
         self.assertEqual(len(self.level._nuggets), 13)
 
     def test_level_is_finished_when_all_nuggets_are_collected(self):
         self.assertEqual(len(self.level._nuggets), 15)
         self.assertEqual(self.level.is_finished, False)
-        self._move_pac(pygame.K_LEFT, 2)
-        self._move_pac(pygame.K_DOWN)
-        self._move_pac(pygame.K_RIGHT, 2)
-        self._move_pac(pygame.K_DOWN)
-        self._move_pac(pygame.K_LEFT, 3)
-        self._move_pac(pygame.K_UP, 3)
-        self._move_pac(pygame.K_RIGHT, 3)
+        self._move_pac(MOVEMENTS[pygame.K_LEFT], 2)
+        self._move_pac(MOVEMENTS[pygame.K_DOWN])
+        self._move_pac(MOVEMENTS[pygame.K_RIGHT], 2)
+        self._move_pac(MOVEMENTS[pygame.K_DOWN])
+        self._move_pac(MOVEMENTS[pygame.K_LEFT], 3)
+        self._move_pac(MOVEMENTS[pygame.K_UP], 3)
+        self._move_pac(MOVEMENTS[pygame.K_RIGHT], 3)
         self.assertEqual(len(self.level._nuggets), 0)
         self.assertEqual(self.level.is_finished, True)
 
@@ -110,7 +111,7 @@ class TestLevelWithEnemy(unittest.TestCase):
 
     def test_life_is_lost_when_pac_moves_into_enemy(self):
         self.assertEqual(self.level.pac.lives, 3)
-        self._move_pac(pygame.K_LEFT, 2)
+        self._move_pac(MOVEMENTS[pygame.K_LEFT], 2)
         self.assertEqual(self.level.pac.lives, 2)
 
     def test_life_is_lost_when_enemy_moves_into_pac(self):
@@ -122,7 +123,7 @@ class TestLevelWithEnemy(unittest.TestCase):
 
     def test_pac_goes_into_ephemeral_mode_after_collision_with_lives_left(self):
         self.assertEqual(self.level.pac.ephemeral, False)
-        self._move_pac(pygame.K_LEFT, 2)
+        self._move_pac(MOVEMENTS[pygame.K_LEFT], 2)
         self.assertEqual(self.level.pac.ephemeral, True)
 
     def test_timer_reduces_with_update_when_in_ephemeral_mode(self):
@@ -140,7 +141,7 @@ class TestLevelWithEnemy(unittest.TestCase):
     def test_ephemeral_mode_turns_off_when_timer_is_zero_or_less(self):
         self.level.pac.ephemeral = True
         self.assertEqual(self.level.pac.timer, 20)
-        for i in range(20):
+        for _i in range(20):
             self.level.do_update()
         self.assertEqual(self.level.pac.ephemeral, False)
 
@@ -149,23 +150,23 @@ class TestLevelWithEnemy(unittest.TestCase):
         self.assertEqual(self.level.pac.timer, 20)
         self.level.do_update()
         self.assertEqual(self.level.pac.timer, 19)
-        for i in range(20):
+        for _i in range(20):
             self.level.do_update()
         self.assertEqual(self.level.pac.timer, 20)
 
     def test_losing_last_life_ends_level(self):
         self.assertEqual(self.level.is_finished, False)
         self.assertEqual(self.level.pac.lives, 3)
-        self._move_pac(pygame.K_LEFT, 2)
+        self._move_pac(MOVEMENTS[pygame.K_LEFT], 2)
         self.assertEqual(self.level.pac.lives, 2)
-        for i in range(20):
+        for _i in range(20):
             self.level.do_update()
-        self._move_pac(pygame.K_DOWN)
-        self._move_pac(pygame.K_UP)
+        self._move_pac(MOVEMENTS[pygame.K_DOWN])
+        self._move_pac(MOVEMENTS[pygame.K_UP])
         self.assertEqual(self.level.pac.lives, 1)
-        for i in range(20):
+        for _i in range(20):
             self.level.do_update()
-        self._move_pac(pygame.K_DOWN)
-        self._move_pac(pygame.K_UP)
+        self._move_pac(MOVEMENTS[pygame.K_DOWN])
+        self._move_pac(MOVEMENTS[pygame.K_UP])
         self.assertEqual(self.level.pac.lives, 0)
         self.assertEqual(self.level.is_finished, True)
