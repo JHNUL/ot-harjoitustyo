@@ -1,7 +1,7 @@
 import sys
 import pygame
 
-from constants import MOVE_ENEMIES
+from constants import DIRECTION_KEYS, MOVE_ENEMIES, MOVEMENTS
 from game.level import Level
 from renderer import Renderer
 
@@ -20,11 +20,10 @@ class MainLoop:
         for event in events:
             if event.type == pygame.QUIT:
                 do_quit = True
-            if event.type == pygame.KEYDOWN:
-                if event.key in [pygame.K_UP, pygame.K_RIGHT, pygame.K_DOWN, pygame.K_LEFT]:
-                    direction = event.key
-            if event.type == pygame.KEYUP:
-                if event.key == direction:
+            if event.type == pygame.KEYDOWN and event.key in DIRECTION_KEYS:
+                direction = MOVEMENTS[event.key]
+            if event.type == pygame.KEYUP and event.key in DIRECTION_KEYS:
+                if MOVEMENTS[event.key] == direction:
                     direction = None
             if event.type == MOVE_ENEMIES:
                 move_enemies = True
@@ -37,7 +36,7 @@ class MainLoop:
             direction, move_enemies, do_quit = self._handle_events(
                 events, direction)
             if do_quit:
-                sys.exit()
+                break
             self._level.do_update(move_enemies, direction)
             self._renderer.render()
             self._clock.tick(10)

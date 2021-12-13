@@ -12,14 +12,21 @@ class Level:
     def __init__(self, level_map, score: Score, score_service: ScoreService):
         self.is_finished = False
         self.pac = None
-        self.current_score = score
-        self.sprites = pygame.sprite.Group()
         self._map = level_map
+        self.sprites = pygame.sprite.Group()
         self._walls = pygame.sprite.Group()
         self._nuggets = pygame.sprite.Group()
         self._enemies = pygame.sprite.Group()
         self._score_service = score_service
+        self.current_score = score
+        self.top_scores = self._get_top_scores()
         self._create_level()
+
+
+    def _get_top_scores(self):
+        scores = self._score_service.get_scores_with_player_names(3)
+        leaders = ", ".join([f"{i+1}: {s[1]} {s[0]}" for i, s in enumerate(scores)])
+        return leaders
 
     def _create_level(self):
         for y in range(len(self._map)):
@@ -63,6 +70,7 @@ class Level:
         for enemy in self._enemies:
             enemy.kill()
         self.current_score.reset()
+        self._get_top_scores()
         self._create_level()
         self.is_finished = False
 

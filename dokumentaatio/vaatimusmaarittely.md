@@ -14,7 +14,7 @@ Kirjautuminen:
 - Kirjautuminen tapahtuu syöttämällä käyttäjätunnus, mitään salasanoja ei ole. Jos käyttäjätunnusta ei ole olemassa, se tallennetaan kirjautumisen yhteydessä. ***tehty***s
 
 Kirjautumisen jälkeen:
-- pelaaja näkee *tuotantotasoisen* pelialustan ja leaderboardin, jossa listattu max 5 kappaletta parhaita tuloksia käyttäjätunnuksineen
+- pelaaja näkee *tuotantotasoisen* pelialustan ja leaderboardin, jossa listattu max 3 kappaletta parhaita tuloksia käyttäjätunnuksineen
 - pelaaja voi kontrolloida pac-ötökkää nuolinäppäimillä ***tehty***
 - pelikentällä on vihollisia, jotka liikkuvat näennäisen satunnaisesti ***tehty***
 - viholliseen törmäämisestä pelaaja menettää yhden elämän ***tehty***

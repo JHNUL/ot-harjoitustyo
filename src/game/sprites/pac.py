@@ -23,17 +23,8 @@ class Pac(pygame.sprite.Sprite):
         self.timer = 20
 
     def move(self, direction, walls):
-        d_x, d_y = 0, 0
-        if direction == pygame.K_LEFT:
-            d_x, d_y = -CELL_SIZE, 0
-        elif direction == pygame.K_RIGHT:
-            d_x, d_y = CELL_SIZE, 0
-        elif direction == pygame.K_UP:
-            d_x, d_y = 0, -CELL_SIZE
-        elif direction == pygame.K_DOWN:
-            d_x, d_y = 0, CELL_SIZE
-
-        if d_x or d_y:
+        if direction:
+            d_x, d_y = direction
             self.rect.move_ip(d_x, d_y)
             if len(pygame.sprite.spritecollide(self, walls, False)):
                 self.rect.move_ip(-d_x, -d_y)

@@ -10,4 +10,6 @@ class ScoreService:
     def add_score(self, score: Score) -> Score:
         score.set_timestamp(datetime.now().timestamp())
         self._score_repository.add_score(score)
-        
+
+    def get_scores_with_player_names(self, count: int) -> list:
+        return self._score_repository.find_top_scores_with_player_names(count)

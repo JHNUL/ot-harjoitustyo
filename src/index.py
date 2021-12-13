@@ -20,7 +20,7 @@ def main():
     pygame.display.set_caption(SCREEN_TITLE_GAME)
     pygame.time.set_timer(MOVE_ENEMIES, 300)
     main_screen = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT))
-    game_screen = pygame.Surface((DISPLAY_WIDTH, DISPLAY_HEIGHT-CELL_SIZE))
+    game_screen = pygame.Surface((DISPLAY_WIDTH, DISPLAY_HEIGHT-CELL_SIZE*2))
     clock = pygame.time.Clock()
     font = pygame.font.SysFont('Segoe', 34)
 
@@ -44,6 +44,8 @@ def main():
     )
     game_loop = MainLoop(level=level, renderer=renderer, clock=clock)
     game_loop.start()
+    pygame.display.quit()
+    pygame.quit()
 
 
 if __name__ == "__main__":
