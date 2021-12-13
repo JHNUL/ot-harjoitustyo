@@ -22,7 +22,7 @@ class Renderer:
             f"SCORE: {self._level.current_score.value}, LIVES: {self._level.pac.lives}", True, WHITE)
         top_scores = self._font.render(
             f"LEADERBOARD: {self._level.top_scores}", True, WHITE)
-        self._level.sprites.draw(self._game_screen)
+        self._level.draw(self._game_screen)
         self._main_screen.blit(player_status, (10, 10))
         self._main_screen.blit(top_scores, (10, 40))
         self._main_screen.blit(self._game_screen, (0, CELL_SIZE*2))

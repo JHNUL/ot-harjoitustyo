@@ -63,20 +63,3 @@ class TestScoreRepository(unittest.TestCase):
         self.assertTrue(res[1].value == 18)
         self.assertTrue(res[2].value == 17)
         self.clear_db()
-
-    def test_get_top_n_scores_returns_top_scores_across_all_players(self):
-        repo = ScoreRepository(self.connection)
-        repo.add_score(Score(100, 1, datetime.now().timestamp()))
-        repo.add_score(Score(80, 1, datetime.now().timestamp()))
-        repo.add_score(Score(99, 2, datetime.now().timestamp()))
-        repo.add_score(Score(135, 3, datetime.now().timestamp()))
-        repo.add_score(Score(59, 4, datetime.now().timestamp()))
-        repo.add_score(Score(109, 4, datetime.now().timestamp()))
-
-        res = repo.find_top_scores(4)
-        self.assertTrue(len(res) == 4)
-        self.assertTrue(res[0].value == 135)
-        self.assertTrue(res[1].value == 109)
-        self.assertTrue(res[2].value == 100)
-        self.assertTrue(res[3].value == 99)
-        self.clear_db()

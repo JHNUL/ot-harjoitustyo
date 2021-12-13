@@ -6,7 +6,20 @@ dirname = os.path.dirname(__file__)
 
 
 class Nugget(pygame.sprite.Sprite):
-    def __init__(self, x, y):
+    """Class containing the logic for nugget
+
+    Attributes:
+        image (Surface): the in-game image of the nugget
+        rect (Rect): the rectangle of the in-game image
+    """
+
+    def __init__(self, x: int, y: int):
+        """Constructor
+
+        Args:
+            x (int): x coordinate
+            y (int): y coordinate
+        """
         super().__init__()
 
         self.image = pygame.image.load(

@@ -9,7 +9,21 @@ dirname = os.path.dirname(__file__)
 
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, x, y):
+    """Class containing the logic for enemy
+
+    Attributes:
+        image (Surface): the in-game image of the enemy
+        rect (Rect): the rectangle of the in-game image
+        direction (Direction): one of four possible directions in the game
+    """
+
+    def __init__(self, x: int, y: int):
+        """Constructor
+
+        Args:
+            x (int): starting x coordinate for the enemy
+            y (int): starting y coordinate for the enemy
+        """
         super().__init__()
         self.image = pygame.image.load(
             os.path.join(dirname, "..", "..", "assets", "proto_enemy.png")
@@ -20,7 +34,17 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.y = y
         self.direction = get_random_direction()
 
-    def _can_move(self, walls, x, y):
+    def _can_move(self, walls: pygame.sprite.Group, x: int, y: int) -> bool:
+        """Method to check if enemy can move to given x and y position
+
+        Args:
+            walls (pygame.sprite.Group): collection of sprites representing walls in the game
+            x (int): x coordinate to move
+            y (int): y coordinate to move
+
+        Returns:
+            bool: True if can move
+        """
         can = True
         self.rect.move_ip(x, y)
         if len(pygame.sprite.spritecollide(self, walls, False)):
@@ -28,7 +52,15 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.move_ip(-x, -y)
         return can
 
-    def _get_allowed_directions(self, walls) -> list:
+    def _get_allowed_directions(self, walls: pygame.sprite.Group) -> list:
+        """Get possible directions where the enemy can move to. Directions are represented as enum.
+
+        Args:
+            walls (pygame.sprite.Group): collection of sprites representing walls in the game
+
+        Returns:
+            list: List of possible directions
+        """
         allowed_dirs = {
             Direction.UP: True,
             Direction.RIGHT: True,
@@ -55,8 +87,13 @@ class Enemy(pygame.sprite.Sprite):
 
         return [x[0] for x in allowed_dirs.items() if x[1]]
 
-    def move(self, walls, direction: Direction = None):
+    def move(self, walls: pygame.sprite.Group, direction: Direction = None):
+        """Moves enemy to somewhat random direction unless direction is given as argument.
 
+        Args:
+            walls (pygame.sprite.Group): collection of sprites representing walls in the game
+            direction (Direction, optional): direction to move enemy. Defaults to None.
+        """
         self.direction = direction if direction else choice(
             self._get_allowed_directions(walls))
 
