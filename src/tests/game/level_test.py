@@ -6,7 +6,7 @@ from models.score import Score
 from repositories.score_repository import ScoreRepository
 from db_connection import get_db_connection
 from services.score_service import ScoreService
-from utils import normalize
+from game.utils import normalize
 from constants import MOVEMENTS
 
 

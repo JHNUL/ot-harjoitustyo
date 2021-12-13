@@ -1,9 +1,9 @@
 import os
 from random import choice
 import pygame
-from constants import CELL_SIZE
 from game.enums import Direction
-from utils import get_random_direction
+from game.utils import get_random_direction
+from constants import CELL_SIZE
 
 dirname = os.path.dirname(__file__)
 

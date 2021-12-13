@@ -3,9 +3,9 @@ from game.sprites.enemy import Enemy
 from game.sprites.nugget import Nugget
 from game.sprites.pac import Pac
 from game.sprites.wall import Wall
+from game.utils import normalize
 from models.score import Score
 from services.score_service import ScoreService
-from utils import normalize
 
 
 class Level:
@@ -108,7 +108,7 @@ class Level:
         for enemy in self._enemies:
             enemy.kill()
         self.current_score.reset()
-        self._get_top_scores()
+        self.top_scores = self._get_top_scores()
         self._create_level()
         self.is_finished = False
 

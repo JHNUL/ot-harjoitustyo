@@ -1,9 +1,8 @@
-import sys
 import pygame
 
 from constants import DIRECTION_KEYS, MOVE_ENEMIES, MOVEMENTS
 from game.level import Level
-from renderer import Renderer
+from ui.renderer import Renderer
 
 
 class MainLoop:

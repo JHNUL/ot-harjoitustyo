@@ -1,12 +1,12 @@
 import pygame
 from constants import CELL_SIZE, DISPLAY_HEIGHT, DISPLAY_WIDTH, MAP, SCREEN_TITLE_GAME, MOVE_ENEMIES
 from game.level import Level
-from game.menus.game_over_menu import GameOverMenu
-from game.menus.login_menu import LoginMenu
-from main_loop import MainLoop
+from game.main_loop import MainLoop
+from ui.game_over_menu import GameOverMenu
+from ui.login_menu import LoginMenu
+from ui.renderer import Renderer
 from models.score import Score
 from models.player import Player
-from renderer import Renderer
 from repositories.player_repository import PlayerRepository
 from repositories.score_repository import ScoreRepository
 from db_connection import get_db_connection
