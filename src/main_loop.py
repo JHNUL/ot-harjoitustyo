@@ -24,7 +24,8 @@ class MainLoop:
                 if event.key in [pygame.K_UP, pygame.K_RIGHT, pygame.K_DOWN, pygame.K_LEFT]:
                     direction = event.key
             if event.type == pygame.KEYUP:
-                direction = None
+                if event.key == direction:
+                    direction = None
             if event.type == MOVE_ENEMIES:
                 move_enemies = True
         return (direction, move_enemies, do_quit)

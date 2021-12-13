@@ -12,7 +12,7 @@ class Pac(pygame.sprite.Sprite):
         self.image = pygame.image.load(
             os.path.join(dirname, "..", "..", "assets", "proto_pac.png")
         )
-        self._original_image = pygame.transform.scale(self.image, (50, 50))
+        self._original_image = pygame.transform.scale(self.image, (CELL_SIZE, CELL_SIZE))
         self.image = self._original_image.copy()
         self.damage_image = self.image.copy()
         self.damage_image.set_alpha(128)
