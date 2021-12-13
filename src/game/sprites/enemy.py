@@ -38,7 +38,7 @@ class Enemy(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.timer = 30
+        self.timer = 60
         self.vulnerable = False
         self.direction = get_random_direction()
 

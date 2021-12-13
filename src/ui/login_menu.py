@@ -1,4 +1,4 @@
-from pygame import Surface, QUIT
+from pygame import Surface, event
 from pygame_menu import Menu
 
 import constants as const
@@ -32,6 +32,12 @@ class LoginMenu:
         self._score.set_player_id(player)
         self._menu.disable()
 
+    def _quit_game_callback(self):
+        """Callback for quit game button"""
+        self._menu.disable()
+        quit_event = event.Event(const.QUIT_EVENT)
+        event.post(quit_event)
+
     def _set_name(self, value: str):
         """Set the name from input
 
@@ -46,7 +52,7 @@ class LoginMenu:
             const.INPUT_LABEL_PLAYER_NAME, onchange=self._set_name)
         self._menu.add.button(
             const.BTN_TXT_START, self._start_btn_callback)
-        self._menu.add.button(const.BTN_TEXT_QUIT, QUIT)
+        self._menu.add.button(const.BTN_TEXT_QUIT, self._quit_game_callback)
 
     def start(self, surface: Surface):
         """Starts the menu main loop

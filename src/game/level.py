@@ -1,5 +1,4 @@
 import pygame
-from constants import MOVE_ENEMIES
 from game.sprites.enemy import Enemy
 from game.sprites.nugget import Nugget
 from game.sprites.pac import Pac
@@ -153,8 +152,6 @@ class Level:
             are in vulnerable state. Defaults to False.
             direction (Direction, optional): direction for Pac. Defaults to None.
         """
-        if self.is_finished:
-            return
         if move_enemies:
             self._move_enemies()
         if move_vulnerable_enemies:

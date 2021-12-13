@@ -1,6 +1,6 @@
 import pygame
 
-from constants import DIRECTION_KEYS, MOVE_ENEMIES, MOVE_VULNERABLE_ENEMIES, MOVEMENTS
+from constants import DIRECTION_KEYS, MOVE_ENEMIES, MOVE_VULNERABLE_ENEMIES, MOVEMENTS, QUIT_EVENT
 from game.level import Level
 from ui.renderer import Renderer
 
@@ -18,7 +18,7 @@ class MainLoop:
         do_quit = False
         direction = current_direction
         for event in events:
-            if event.type == pygame.QUIT:
+            if event.type in (pygame.QUIT, QUIT_EVENT):
                 do_quit = True
             if event.type == pygame.KEYDOWN and event.key in DIRECTION_KEYS:
                 direction = MOVEMENTS[event.key]
@@ -44,5 +44,7 @@ class MainLoop:
                 move_vulnerable_enemies=move_vul_enemies,
                 direction=direction
             )
+            if self._level.is_finished:
+                direction = None
             self._renderer.render()
             self._clock.tick(10)
