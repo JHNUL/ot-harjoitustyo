@@ -14,6 +14,7 @@ class Enemy(pygame.sprite.Sprite):
     Attributes:
         image (Surface): the in-game image of the enemy
         rect (Rect): the rectangle of the in-game image
+        vulnerable (bool): if enemy is vulnerable
         direction (Direction): one of four possible directions in the game
     """
 
@@ -29,9 +30,16 @@ class Enemy(pygame.sprite.Sprite):
             os.path.join(dirname, "..", "..", "assets", "proto_enemy.png")
         )
         self.image = pygame.transform.scale(self.image, (CELL_SIZE, CELL_SIZE))
+        self._original_image = pygame.transform.scale(
+            self.image, (CELL_SIZE, CELL_SIZE))
+        self.image = self._original_image.copy()
+        self.vulnerable_image = self.image.copy()
+        self.vulnerable_image.set_alpha(128)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+        self.timer = 30
+        self.vulnerable = False
         self.direction = get_random_direction()
 
     def _can_move(self, walls: pygame.sprite.Group, x: int, y: int) -> bool:
@@ -111,3 +119,15 @@ class Enemy(pygame.sprite.Sprite):
 
         if len(pygame.sprite.spritecollide(self, walls, False)):
             self.rect.move_ip(-d_x, -d_y)
+
+    def set_vulnerable(self):
+        self.vulnerable = True
+        self.image = self.vulnerable_image
+
+    def count_down(self):
+        """count down the timer, when zero reset timer and set original image"""
+        self.timer -= 1
+        if self.timer <= 0:
+            self.vulnerable = False
+            self.image = self._original_image
+            self.timer = 10

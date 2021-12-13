@@ -1,6 +1,6 @@
 import pygame
 
-from constants import DIRECTION_KEYS, MOVE_ENEMIES, MOVEMENTS
+from constants import DIRECTION_KEYS, MOVE_ENEMIES, MOVE_VULNERABLE_ENEMIES, MOVEMENTS
 from game.level import Level
 from ui.renderer import Renderer
 
@@ -14,6 +14,7 @@ class MainLoop:
 
     def _handle_events(self, events, current_direction):
         move_enemies = False
+        move_vul_enemies = False
         do_quit = False
         direction = current_direction
         for event in events:
@@ -26,16 +27,22 @@ class MainLoop:
                     direction = None
             if event.type == MOVE_ENEMIES:
                 move_enemies = True
-        return (direction, move_enemies, do_quit)
+            if event.type == MOVE_VULNERABLE_ENEMIES:
+                move_vul_enemies = True
+        return (direction, move_enemies, move_vul_enemies, do_quit)
 
     def start(self):
         direction = None
         while True:
             events = pygame.event.get()
-            direction, move_enemies, do_quit = self._handle_events(
+            direction, move_enemies, move_vul_enemies, do_quit = self._handle_events(
                 events, direction)
             if do_quit:
                 break
-            self._level.do_update(move_enemies, direction)
+            self._level.do_update(
+                move_enemies=move_enemies,
+                move_vulnerable_enemies=move_vul_enemies,
+                direction=direction
+            )
             self._renderer.render()
             self._clock.tick(10)

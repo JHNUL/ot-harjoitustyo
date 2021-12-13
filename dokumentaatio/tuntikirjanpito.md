@@ -17,4 +17,5 @@
 | 5.12        | 5           | harjoitustyön työstöä viikko 5, refaktoria |
 | 6.12        | 2           | harjoitustyön työstöä viikko 5, refaktoria |
 | 7.12        | 1           | harjoitustyön työstöä viikko 5 |
-|yht| 48  |
+| 13.12       | 5           | harjoitustyön työstöä viikko 6 |
+|yht| 53  |
