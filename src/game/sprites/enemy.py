@@ -130,4 +130,4 @@ class Enemy(pygame.sprite.Sprite):
         if self.timer <= 0:
             self.vulnerable = False
             self.image = self._original_image
-            self.timer = 10
+            self.timer = 60
