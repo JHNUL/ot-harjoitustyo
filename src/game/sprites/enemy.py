@@ -104,7 +104,6 @@ class Enemy(pygame.sprite.Sprite):
         """
         self.direction = direction if direction else choice(
             self._get_allowed_directions(walls))
-
         d_x, d_y = 0, 0
         if self.direction == Direction.LEFT:
             d_x, d_y = -CELL_SIZE, 0
@@ -116,7 +115,6 @@ class Enemy(pygame.sprite.Sprite):
             d_x, d_y = 0, CELL_SIZE
 
         self.rect.move_ip(d_x, d_y)
-
         if len(pygame.sprite.spritecollide(self, walls, False)):
             self.rect.move_ip(-d_x, -d_y)
 

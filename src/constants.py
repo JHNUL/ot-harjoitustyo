@@ -39,6 +39,7 @@ MOVEMENTS = {
     pygame.K_LEFT: (-CELL_SIZE, 0)
 }
 
+# disabling rule because it is important to see the map in its full width when changing something
 # pylint: disable=line-too-long
 MAP = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],

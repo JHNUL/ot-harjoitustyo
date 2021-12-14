@@ -21,7 +21,8 @@ TEST_MAP = [[1, 1, 1, 1, 1, 1],
 class TestLevelWithoutEnemy(unittest.TestCase):
     def setUp(self):
         self.score = Score(value=0, player_id=5)
-        self.score_service = ScoreService(score_repository=ScoreRepository(get_db_connection()))
+        self.score_service = ScoreService(
+            score_repository=ScoreRepository(get_db_connection()))
         self.level = Level(TEST_MAP, self.score, self.score_service)
 
     def _move_pac(self, direction, times=1):
@@ -72,7 +73,7 @@ class TestLevelWithoutEnemy(unittest.TestCase):
 
 
 TEST_MAP_WITH_ENEMY = [[1, 1, 1, 1, 1, 1],
-                       [1, 3, 0, 2, 0, 1],
+                       [1, 3, 0, 2, 4, 1],
                        [1, 0, 0, 0, 0, 1],
                        [1, 0, 0, 0, 0, 1],
                        [1, 0, 0, 0, 0, 1],
@@ -82,7 +83,8 @@ TEST_MAP_WITH_ENEMY = [[1, 1, 1, 1, 1, 1],
 class TestLevelWithEnemy(unittest.TestCase):
     def setUp(self):
         self.score = Score(value=0)
-        self.score_service = ScoreService(score_repository=ScoreRepository(get_db_connection()))
+        self.score_service = ScoreService(
+            score_repository=ScoreRepository(get_db_connection()))
         self.level = Level(TEST_MAP_WITH_ENEMY, self.score, self.score_service)
         self.enemy = [x for x in self.level._enemies][0]
 
@@ -170,3 +172,38 @@ class TestLevelWithEnemy(unittest.TestCase):
         self._move_pac(MOVEMENTS[pygame.K_UP])
         self.assertEqual(self.level.pac.lives, 0)
         self.assertEqual(self.level.is_finished, True)
+
+    def test_collecting_super_nugget_sets_enemies_vulnerable(self):
+        self.assertEqual(self.enemy.vulnerable, False)
+        self._move_pac(MOVEMENTS[pygame.K_RIGHT], 1)
+        self.level.do_update()
+        self.assertEqual(self.enemy.vulnerable, True)
+
+    def test_colliding_with_vulnerable_enemy_does_not_decrease_lives(self):
+        self.assertEqual(self.enemy.vulnerable, False)
+        self.assertEqual(self.level.pac.lives, 3)
+        self._move_pac(MOVEMENTS[pygame.K_RIGHT], 1)
+        self._move_pac(MOVEMENTS[pygame.K_LEFT], 4)
+        self.assertEqual(self.level.pac.lives, 3)
+
+    def test_colliding_with_vulnerable_enemy_increases_score(self):
+        self.assertEqual(self.level.current_score.value, 0)
+        self._move_pac(MOVEMENTS[pygame.K_RIGHT], 1)
+        self._move_pac(MOVEMENTS[pygame.K_LEFT], 4)
+        # 10 for super nugget + 1 normal
+        self.assertEqual(self.level.current_score.value, 11)
+
+    def test_colliding_with_vulnerable_enemy_kills_enemy(self):
+        self.assertEqual(self.enemy.alive(), True)
+        self._move_pac(MOVEMENTS[pygame.K_RIGHT], 1)
+        self._move_pac(MOVEMENTS[pygame.K_LEFT], 4)
+        self.assertEqual(self.enemy.alive(), False)
+
+    def test_colliding_with_pac_kills_enemy_when_vulnerable(self):
+        self.assertEqual(self.enemy.alive(), True)
+        self._move_pac(MOVEMENTS[pygame.K_RIGHT], 1)
+        self.enemy.move(self.level._walls, Direction.RIGHT)
+        self.enemy.move(self.level._walls, Direction.RIGHT)
+        self.enemy.move(self.level._walls, Direction.RIGHT)
+        self.level.do_update()
+        self.assertEqual(self.enemy.alive(), False)
