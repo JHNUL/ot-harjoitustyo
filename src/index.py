@@ -1,7 +1,7 @@
 import pygame
 import constants as const
 from game.level import Level
-from game.main_loop import MainLoop
+from ui.main_loop import MainLoop
 from ui.game_over_menu import GameOverMenu
 from ui.login_menu import LoginMenu
 from ui.renderer import Renderer
@@ -40,7 +40,6 @@ def main():
         player=player, player_service=player_service, score=score)
     game_over_menu = GameOverMenu(level)
     renderer = Renderer(
-        level=level,
         font=font,
         login_menu=login_menu,
         game_over_menu=game_over_menu,

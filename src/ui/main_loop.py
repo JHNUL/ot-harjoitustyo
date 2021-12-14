@@ -1,3 +1,4 @@
+from typing import List
 import pygame
 
 from constants import DIRECTION_KEYS, MOVE_ENEMIES, MOVE_VULNERABLE_ENEMIES, MOVEMENTS, QUIT_EVENT
@@ -6,13 +7,30 @@ from ui.renderer import Renderer
 
 
 class MainLoop:
+    """Class responsible for running the game loop"""
 
-    def __init__(self, level: Level, renderer: Renderer, clock):
+    def __init__(self, level: Level, renderer: Renderer, clock: pygame.time.Clock):
+        """Constructor
+
+        Args:
+            level (Level): Level object
+            renderer (Renderer): Renderer object
+            clock (pygame.time.Clock): Clock used to control framerate
+        """
         self._level = level
         self._renderer = renderer
         self._clock = clock
 
-    def _handle_events(self, events, current_direction):
+    def _handle_events(self, events: List[pygame.event.Event], current_direction):
+        """Handle events from user interface or elsewhere
+
+        Args:
+            events ([type]): [description]
+            current_direction ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
         move_enemies = False
         move_vul_enemies = False
         do_quit = False
@@ -46,5 +64,5 @@ class MainLoop:
             )
             if self._level.is_finished:
                 direction = None
-            self._renderer.render()
+            self._renderer.render(self._level)
             self._clock.tick(10)
