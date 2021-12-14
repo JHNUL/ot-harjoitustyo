@@ -4,10 +4,26 @@ from repositories.player_repository import PlayerRepository
 
 
 class PlayerService:
+    """Player service class, layer between logic/ui modules and repository class"""
+
     def __init__(self, player_repository: PlayerRepository):
+        """Constructor
+
+        Args:
+            player_repository (PlayerRepository): player repository
+        """
         self._player_repository = player_repository
 
     def player_login(self, name: str) -> Player:
+        """Assigns timestamp and creates player if does not exist.
+        Otherwise updates last login time.
+
+        Args:
+            name (str): player name
+
+        Returns:
+            Player: player object
+        """
         now = datetime.now().timestamp()
         player = self._player_repository.find_player_by_name(name)
         if player is None:

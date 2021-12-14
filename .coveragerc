@@ -7,7 +7,6 @@ omit = src/**/__init__.py,
   src/assets/**,
   src/index.py,
   src/constants.py,
-  src/game/menus/**,
-  src/game/sprites/**,
-  src/main_loop.py,
-  src/renderer.py
+  src/game/enums.py,
+  src/game/main_loop.py,
+  src/ui/**

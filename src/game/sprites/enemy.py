@@ -1,26 +1,58 @@
 import os
 from random import choice
 import pygame
-from constants import CELL_SIZE
 from game.enums import Direction
-from utils import get_random_direction
+from game.utils import get_random_direction
+from constants import CELL_SIZE
 
 dirname = os.path.dirname(__file__)
 
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, x, y):
+    """Class containing the logic for enemy
+
+    Attributes:
+        image (Surface): the in-game image of the enemy
+        rect (Rect): the rectangle of the in-game image
+        vulnerable (bool): if enemy is vulnerable
+        direction (Direction): one of four possible directions in the game
+    """
+
+    def __init__(self, x: int, y: int):
+        """Constructor
+
+        Args:
+            x (int): starting x coordinate for the enemy
+            y (int): starting y coordinate for the enemy
+        """
         super().__init__()
         self.image = pygame.image.load(
             os.path.join(dirname, "..", "..", "assets", "proto_enemy.png")
         )
-        self.image = pygame.transform.scale(self.image, (50, 50))
+        self.image = pygame.transform.scale(self.image, (CELL_SIZE, CELL_SIZE))
+        self._original_image = pygame.transform.scale(
+            self.image, (CELL_SIZE, CELL_SIZE))
+        self.image = self._original_image.copy()
+        self.vulnerable_image = self.image.copy()
+        self.vulnerable_image.set_alpha(128)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+        self.timer = 60
+        self.vulnerable = False
         self.direction = get_random_direction()
 
-    def _can_move(self, walls, x, y):
+    def _can_move(self, walls: pygame.sprite.Group, x: int, y: int) -> bool:
+        """Method to check if enemy can move to given x and y position
+
+        Args:
+            walls (pygame.sprite.Group): collection of sprites representing walls in the game
+            x (int): x coordinate to move
+            y (int): y coordinate to move
+
+        Returns:
+            bool: True if can move
+        """
         can = True
         self.rect.move_ip(x, y)
         if len(pygame.sprite.spritecollide(self, walls, False)):
@@ -28,7 +60,15 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.move_ip(-x, -y)
         return can
 
-    def _get_allowed_directions(self, walls) -> list:
+    def _get_allowed_directions(self, walls: pygame.sprite.Group) -> list:
+        """Get possible directions where the enemy can move to. Directions are represented as enum.
+
+        Args:
+            walls (pygame.sprite.Group): collection of sprites representing walls in the game
+
+        Returns:
+            list: List of possible directions
+        """
         allowed_dirs = {
             Direction.UP: True,
             Direction.RIGHT: True,
@@ -55,11 +95,15 @@ class Enemy(pygame.sprite.Sprite):
 
         return [x[0] for x in allowed_dirs.items() if x[1]]
 
-    def move(self, walls, direction: Direction = None):
+    def move(self, walls: pygame.sprite.Group, direction: Direction = None):
+        """Moves enemy to somewhat random direction unless direction is given as argument.
 
+        Args:
+            walls (pygame.sprite.Group): collection of sprites representing walls in the game
+            direction (Direction, optional): direction to move enemy. Defaults to None.
+        """
         self.direction = direction if direction else choice(
             self._get_allowed_directions(walls))
-
         d_x, d_y = 0, 0
         if self.direction == Direction.LEFT:
             d_x, d_y = -CELL_SIZE, 0
@@ -71,6 +115,17 @@ class Enemy(pygame.sprite.Sprite):
             d_x, d_y = 0, CELL_SIZE
 
         self.rect.move_ip(d_x, d_y)
-
         if len(pygame.sprite.spritecollide(self, walls, False)):
             self.rect.move_ip(-d_x, -d_y)
+
+    def set_vulnerable(self):
+        self.vulnerable = True
+        self.image = self.vulnerable_image
+
+    def count_down(self):
+        """count down the timer, when zero reset timer and set original image"""
+        self.timer -= 1
+        if self.timer <= 0:
+            self.vulnerable = False
+            self.image = self._original_image
+            self.timer = 60
