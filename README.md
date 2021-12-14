@@ -55,4 +55,4 @@ poetry run invoke lint
 
 - [release 1](https://github.com/JHNUL/ot-harjoitustyo/releases/tag/viikko5)
 
-- [release 1](https://github.com/JHNUL/ot-harjoitustyo/releases/tag/viikko6)
+- [release 2](https://github.com/JHNUL/ot-harjoitustyo/releases/tag/viikko6)
