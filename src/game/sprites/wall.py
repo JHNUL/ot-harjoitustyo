@@ -1,8 +1,7 @@
-import os
 import pygame
 
 from constants import CELL_SIZE
-dirname = os.path.dirname(__file__)
+from game.utils import ImageLoader
 
 
 class Wall(pygame.sprite.Sprite):
@@ -22,9 +21,7 @@ class Wall(pygame.sprite.Sprite):
         """
         super().__init__()
 
-        self.image = pygame.image.load(
-            os.path.join(dirname, "..", "..", "assets", "proto_wall.png")
-        )
+        self.image = ImageLoader.get("wall")
         self.image = pygame.transform.scale(self.image, (CELL_SIZE, CELL_SIZE))
         self.rect = self.image.get_rect()
         self.rect.x = x

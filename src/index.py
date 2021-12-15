@@ -1,6 +1,7 @@
 import pygame
 import constants as const
 from game.level import Level
+from game.utils import ImageLoader
 from ui.main_loop import MainLoop
 from ui.game_over_menu import GameOverMenu
 from ui.login_menu import LoginMenu
@@ -21,6 +22,7 @@ def main():
     pygame.time.set_timer(const.MOVE_ENEMIES, const.ENEMY_MOVE_INTERVAL)
     pygame.time.set_timer(const.MOVE_VULNERABLE_ENEMIES,
                           const.ENEMY_MOVE_INTERVAL//2)
+    ImageLoader.init()
     main_screen = pygame.display.set_mode(
         (const.DISPLAY_WIDTH, const.DISPLAY_HEIGHT))
     game_screen = pygame.Surface(

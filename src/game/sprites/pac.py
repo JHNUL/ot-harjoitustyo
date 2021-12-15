@@ -1,8 +1,7 @@
-import os
 import pygame
 
 from constants import CELL_SIZE
-dirname = os.path.dirname(__file__)
+from game.utils import ImageLoader
 
 
 class Pac(pygame.sprite.Sprite):
@@ -22,9 +21,7 @@ class Pac(pygame.sprite.Sprite):
         self.lives = 3
         self.ephemeral = False
         self.timer = 20
-        self.image = pygame.image.load(
-            os.path.join(dirname, "..", "..", "assets", "proto_pac.png")
-        )
+        self.image = ImageLoader.get("pac")
         self._original_image = pygame.transform.scale(
             self.image, (CELL_SIZE, CELL_SIZE))
         self.image = self._original_image.copy()

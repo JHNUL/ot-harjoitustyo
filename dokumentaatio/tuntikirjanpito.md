@@ -19,4 +19,5 @@
 | 7.12        | 1           | harjoitustyön työstöä viikko 5 |
 | 13.12       | 5           | harjoitustyön työstöä viikko 6 |
 | 14.12       | 5           | harjoitustyön työstöä viikko 6 |
+| 15.12       | 2           | harjoitustyön työstöä viikko 6 |
 |yht| 58  |

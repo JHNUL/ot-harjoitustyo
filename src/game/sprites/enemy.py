@@ -1,11 +1,8 @@
-import os
 from random import choice
 import pygame
 from game.enums import Direction
-from game.utils import get_random_direction
+from game.utils import ImageLoader, get_random_direction
 from constants import CELL_SIZE
-
-dirname = os.path.dirname(__file__)
 
 
 class Enemy(pygame.sprite.Sprite):
@@ -26,9 +23,7 @@ class Enemy(pygame.sprite.Sprite):
             y (int): starting y coordinate for the enemy
         """
         super().__init__()
-        self.image = pygame.image.load(
-            os.path.join(dirname, "..", "..", "assets", "proto_enemy.png")
-        )
+        self.image = ImageLoader.get("enemy")
         self.image = pygame.transform.scale(self.image, (CELL_SIZE, CELL_SIZE))
         self._original_image = pygame.transform.scale(
             self.image, (CELL_SIZE, CELL_SIZE))
