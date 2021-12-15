@@ -99,7 +99,8 @@ class Level:
             self.current_score.increase()
             if len(self._nuggets) == 0:
                 self.is_finished = True
-                self._score_service.add_score(self.current_score)
+                score_id = self._score_service.add_score(self.current_score)
+                self.current_score.set_id(score_id)
 
         if self._check_collision(self._super_nuggets, do_kill=True):
             for enemy in self._enemies:
@@ -136,8 +137,9 @@ class Level:
         """Reset the level. Kills Pac and enemies, resets score."""
         if self.pac is not None:
             self.pac.kill()
-        for enemy in self._enemies:
-            enemy.kill()
+        self._enemies.empty()
+        self._nuggets.empty()
+        self._super_nuggets.empty()
         self.current_score.reset()
         self.top_scores = self._get_top_scores()
         self._create_level()

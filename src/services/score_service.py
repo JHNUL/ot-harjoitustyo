@@ -14,17 +14,18 @@ class ScoreService:
         """
         self._score_repository = score_repository
 
-    def add_score(self, score: Score) -> bool:
+    def add_score(self, score: Score) -> int:
         """Add new score
 
         Args:
             score (Score): score object
 
         Returns:
-            bool: True if success
+            int: id of the inserted Score
         """
         score.set_timestamp(datetime.now().timestamp())
-        self._score_repository.add_score(score)
+        score_id = self._score_repository.add_score(score)
+        return score_id
 
     def get_top_scores_with_player_names(self, count: int) -> list:
         """Find top scores with the names of the players who made them
@@ -36,3 +37,18 @@ class ScoreService:
             list: triplets of score value, player name and score timestamp
         """
         return self._score_repository.find_top_scores_with_player_names(count)
+
+    def get_rank_of_score_by_id(self, score_id: int) -> int:
+        """Find the ranking of a particular score
+
+        Args:
+            score_id (int): score id
+
+        Returns:
+            int: rank number
+        """
+        all_scores = self._score_repository.find_all_scores()
+        for i, score in enumerate(all_scores):
+            if score_id == score.id:
+                return i+1
+        return None

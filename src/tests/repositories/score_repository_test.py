@@ -63,3 +63,18 @@ class TestScoreRepository(unittest.TestCase):
         self.assertTrue(res[1].value == 18)
         self.assertTrue(res[2].value == 17)
         self.clear_db()
+
+    def test_find_all_scores_no_scores(self):
+        repo = ScoreRepository(self.connection)
+        res = repo.find_all_scores()
+        self.assertIsInstance(res, list)
+        self.assertTrue(len(res) == 0)
+        self.clear_db()
+
+    def test_find_all_scores_some_scores(self):
+        repo = ScoreRepository(self.connection)
+        for x in range(10):
+            repo.add_score(Score(x+10, 1, datetime.now().timestamp()))
+        res = repo.find_all_scores()
+        self.assertTrue(len(res) == 10)
+        self.clear_db()

@@ -38,7 +38,7 @@ def main():
                   score_service=score_service)
     login_menu = LoginMenu(
         player=player, player_service=player_service, score=score)
-    game_over_menu = GameOverMenu(level)
+    game_over_menu = GameOverMenu(level=level, score_service=score_service)
     renderer = Renderer(
         font=font,
         login_menu=login_menu,

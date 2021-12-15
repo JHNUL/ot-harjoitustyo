@@ -16,6 +16,7 @@ SCREEN_TITLE_GAME_OVER = "Game over!"
 """Screen labels"""
 PLAYER_WON = "You Won!"
 PLAYER_LOST = "You Lost!"
+PLAYER_SCORE = "Your score was: {}, placing: {}."
 
 """Button texts"""
 BTN_TXT_START = "Start"
