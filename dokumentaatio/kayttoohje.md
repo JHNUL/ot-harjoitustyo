@@ -25,6 +25,6 @@ Pelin alussa pelaajaa pyydetään luomaan pelaajatunnus. Käyttäjätunnukseen t
 
 ## Kirjautumisen jälkeen
 
-Peli alkanee. Tämä on vielä vähän raffi visuaalinen ilme, mutta homma ei ole vielä valmis.
+Peli alkanee. Kenttä näyttää allaolevan kuvan mukaiselta. Pacin suu liikkuu kiinni ja auki ja vihollisten värit arvotaan pienestä joukosta kentän alkaessa.
 
 ![Kuva](./images/pacman.png)
