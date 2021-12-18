@@ -5,8 +5,5 @@ omit = src/**/__init__.py,
   src/init_db.py,
   src/tests/**,
   src/assets/**,
-  src/index.py,
   src/constants.py,
-  src/game/enums.py,
-  src/game/main_loop.py,
   src/ui/**

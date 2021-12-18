@@ -12,6 +12,8 @@ Sovellus on klassinen Pacman-peli, jossa pelaaja ohjaa Pacman-ötökkää labyri
 
 - [Käyttöohje](dokumentaatio/kayttoohje.md)
 
+- [Testidokumentti](dokumentaatio/testausdokumentti.md)
+
 ## Asennus
 
 Järjestelmässä on oltava seuraavat ohjelmistot asennettuna:
