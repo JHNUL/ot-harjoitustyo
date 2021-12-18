@@ -47,8 +47,6 @@ INPUT_LABEL_PLAYER_NAME = "Player name:"
 """Environment"""
 PRODUCTION = "prod"
 TESTING = "test"
-DEVELOPMENT = "dev"
-
 
 DIRECTION_KEYS = [pygame.K_UP, pygame.K_RIGHT, pygame.K_DOWN, pygame.K_LEFT]
 DIRECTION_MAP = {

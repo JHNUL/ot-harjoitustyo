@@ -41,9 +41,11 @@ class Level:
             str: string with the top scores and players
         """
         scores = self._score_service.get_top_scores_with_player_names(3)
-        leaders = ", ".join(
-            [f"{i+1}: {s[1]} {s[0]}" for i, s in enumerate(scores)])
-        return leaders
+        if scores is not None:
+            leaders = ", ".join(
+                [f"{i+1}: {s[1]} {s[0]}" for i, s in enumerate(scores)])
+            return leaders
+        return "Error fetching leaderboard"
 
     def _create_level(self):
         """Create the level from level map"""
@@ -101,7 +103,8 @@ class Level:
             if len(self._nuggets) == 0:
                 self.is_finished = True
                 score_id = self._score_service.add_score(self.current_score)
-                self.current_score.set_id(score_id)
+                if score_id is not None:
+                    self.current_score.set_id(score_id)
 
         if self._check_collision(self._super_nuggets, do_kill=True):
             for enemy in self._enemies:

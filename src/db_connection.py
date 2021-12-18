@@ -1,11 +1,11 @@
 import os
 import sqlite3
-from constants import PRODUCTION, TESTING, DEVELOPMENT
+from constants import PRODUCTION, TESTING
 
 
 dirname = os.path.dirname(__file__)
 env = os.getenv("ENV").lower()
-if env not in [PRODUCTION, TESTING, DEVELOPMENT]:
+if env not in [PRODUCTION, TESTING]:
     raise Exception(f"Environment {env} not recognized.")
 
 db_file = f"database.{env}.sqlite"

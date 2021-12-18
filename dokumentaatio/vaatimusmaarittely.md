@@ -32,6 +32,7 @@ Kirjautumisen jälkeen:
 Sovelluksen tulee toimia Linux ja macOS-käyttöjärjestelmillä. Tuettu Python-versio on >= 3.8. Pelaajien käyttäjätunnukset ja pelikertojen tulokset tallentuvat sqlite-tietokantaan.
 
 ## Jatkokehitysideat
+- Pacin ja vihollisten liikkuminen on sujuvaa eikä solu kerrallaan nykivää
 - pelaaja voi kirjautua ulos jolloin sovellus palaa kirjautumisnäkymään
 - pelissä on useampia tasoja
 - peliin voi "importata" itse luodun tason

@@ -2,7 +2,6 @@ import unittest
 from datetime import datetime
 from db_connection import get_db_connection
 from models.score import Score
-
 from repositories.score_repository import ScoreRepository
 from services.score_service import ScoreService
 

@@ -53,8 +53,11 @@ class GameOverMenu:
         if self._level.pac.lives:
             title = const.PLAYER_WON
             rank = self._score_service.get_rank_of_score_by_id(self._level.current_score.id)
-            self._score_label.set_title(
-                const.PLAYER_SCORE.format(self._level.current_score.value, rank))
+            if rank is not None:
+                self._score_label.set_title(
+                    const.PLAYER_SCORE.format(self._level.current_score.value, rank))
+            else:
+                self._score_label.set_title("Error saving score")
             self._score_label.show()
         else:
             title = const.PLAYER_LOST

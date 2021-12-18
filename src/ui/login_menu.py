@@ -26,15 +26,19 @@ class LoginMenu:
         self._name = ""
         self._start_disabled = True
         self._label = None
+        self._error_label = None
         self._init_screen()
 
     def _start_btn_callback(self):
         """Callback for start button"""
         if not self._start_disabled:
             player = self._player_service.player_login(self._name)
-            self._player.set_player(player)
-            self._score.set_player_id(player)
-            self._menu.disable()
+            if player is not None:
+                self._player.set_player(player)
+                self._score.set_player_id(player)
+                self._menu.disable()
+            else:
+                self._error_label.show()
         else:
             self._label.show()
 
@@ -64,6 +68,10 @@ class LoginMenu:
         self._label.add_underline(Color(255, 0, 0), 0, 2)
         self._label.resize(240, 30)
         self._label.hide()
+        self._error_label = self._menu.add.label("Unable to login or create player")
+        self._error_label.add_underline(Color(255, 0, 0), 0, 2)
+        self._error_label.resize(240, 30)
+        self._error_label.hide()
         self._menu.add.text_input(
             const.INPUT_LABEL_PLAYER_NAME, onchange=self._set_name)
         self._menu.add.button(
