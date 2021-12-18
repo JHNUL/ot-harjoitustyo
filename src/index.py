@@ -20,6 +20,7 @@ def main():
     pygame.init()
     pygame.display.set_caption(const.SCREEN_TITLE_GAME)
     pygame.time.set_timer(const.MOVE_ENEMIES, const.ENEMY_MOVE_INTERVAL)
+    pygame.time.set_timer(const.PAC_CHANGE_MOUTH, const.ENEMY_MOVE_INTERVAL)
     pygame.time.set_timer(const.MOVE_VULNERABLE_ENEMIES,
                           const.ENEMY_MOVE_INTERVAL//2)
     ImageLoader.init()

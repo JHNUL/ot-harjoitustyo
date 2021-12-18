@@ -1,8 +1,7 @@
 from random import choice
 import pygame
-from game.enums import Direction
 from game.utils import ImageLoader, get_random_direction
-from constants import CELL_SIZE
+from constants import CELL_SIZE, Direction
 
 
 class Enemy(pygame.sprite.Sprite):
@@ -23,13 +22,10 @@ class Enemy(pygame.sprite.Sprite):
             y (int): starting y coordinate for the enemy
         """
         super().__init__()
-        self.image = ImageLoader.get("enemy")
-        self.image = pygame.transform.scale(self.image, (CELL_SIZE, CELL_SIZE))
-        self._original_image = pygame.transform.scale(
+        self.image = pygame.transform.scale(
+            ImageLoader.get("enemy"), (CELL_SIZE, CELL_SIZE))
+        self.image = pygame.transform.scale(
             self.image, (CELL_SIZE, CELL_SIZE))
-        self.image = self._original_image.copy()
-        self.vulnerable_image = self.image.copy()
-        self.vulnerable_image.set_alpha(128)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -52,7 +48,7 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.move_ip(x, y)
         if len(pygame.sprite.spritecollide(self, walls, False)):
             can = False
-        self.rect.move_ip(-x, -y)
+            self.rect.move_ip(-x, -y)
         return can
 
     def _get_allowed_directions(self, walls: pygame.sprite.Group) -> list:
@@ -115,12 +111,12 @@ class Enemy(pygame.sprite.Sprite):
 
     def set_vulnerable(self):
         self.vulnerable = True
-        self.image = self.vulnerable_image
+        self.image.set_alpha(128)
 
     def count_down(self):
         """count down the timer, when zero reset timer and set original image"""
         self.timer -= 1
         if self.timer <= 0:
             self.vulnerable = False
-            self.image = self._original_image
+            self.image.set_alpha(255)
             self.timer = 60

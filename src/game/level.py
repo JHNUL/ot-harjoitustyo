@@ -28,14 +28,8 @@ class Level:
             score_service (ScoreService): score service object
         """
         self._map = level_map
-        self._sprites = pygame.sprite.Group()
-        self._walls = pygame.sprite.Group()
-        self._nuggets = pygame.sprite.Group()
-        self._super_nuggets = pygame.sprite.Group()
-        self._enemies = pygame.sprite.Group()
         self._score_service = score_service
         self.is_finished = False
-        self.pac = None
         self.current_score = score
         self.top_scores = self._get_top_scores()
         self._create_level()
@@ -53,13 +47,20 @@ class Level:
 
     def _create_level(self):
         """Create the level from level map"""
+        self._sprites = pygame.sprite.Group()
+        self._sprites = pygame.sprite.Group()
+        self._walls = pygame.sprite.Group()
+        self._nuggets = pygame.sprite.Group()
+        self._super_nuggets = pygame.sprite.Group()
+        self._enemies = pygame.sprite.Group()
+        self.pac = None
         for y in range(len(self._map)):
             for x in range(len(self._map[0])):
                 cell = self._map[y][x]
                 if cell == 0:
                     self._nuggets.add(Nugget(normalize(x), normalize(y)))
-                elif cell == 1:
-                    self._walls.add(Wall(normalize(x), normalize(y)))
+                elif cell in [1, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]:
+                    self._walls.add(Wall(normalize(x), normalize(y), cell))
                 elif cell == 2:
                     self.pac = Pac(normalize(x), normalize(y))
                 elif cell == 3:
@@ -69,11 +70,11 @@ class Level:
                         SuperNugget(normalize(x), normalize(y)))
 
         self._sprites.add(
-            self.pac,
             self._walls,
             self._nuggets,
             self._super_nuggets,
-            self._enemies
+            self._enemies,
+            self.pac
         )
 
     def _check_collision(self, sprites: pygame.sprite.Group, do_kill=False) -> int:
@@ -113,7 +114,7 @@ class Level:
             elif pygame.sprite.collide_rect(self.pac, enemy):
                 if not self.pac.ephemeral:
                     self.pac.lives -= 1
-                    self.pac.ephemeral = True
+                    self.pac.set_ephemeral()
                 if self.pac.lives == 0:
                     self.is_finished = True
                     break
@@ -134,18 +135,19 @@ class Level:
             self._check_collisions()
 
     def reset(self):
-        """Reset the level. Kills Pac and enemies, resets score."""
-        if self.pac is not None:
-            self.pac.kill()
-        self._enemies.empty()
-        self._nuggets.empty()
-        self._super_nuggets.empty()
+        """Reset the level including score."""
         self.current_score.reset()
         self.top_scores = self._get_top_scores()
         self._create_level()
         self.is_finished = False
 
-    def do_update(self, move_enemies=False, move_vulnerable_enemies=False, direction=None):
+    def do_update(
+        self,
+        move_enemies=False,
+        move_vulnerable_enemies=False,
+        direction=None,
+        change_pac_mouth=False
+    ):
         """Moves enemies and Pac.
 
         Args:
@@ -153,6 +155,7 @@ class Level:
             move_vulnerable_enemies (bool, optional): if True moves enemies who
             are in vulnerable state. Defaults to False.
             direction (Direction, optional): direction for Pac. Defaults to None.
+            change_pac_mouth (bool, optional): pac mouth position should change. Defaults to False.
         """
         if move_enemies:
             self._move_enemies()
@@ -163,6 +166,8 @@ class Level:
         self._check_collisions()
         if self.pac.ephemeral:
             self.pac.count_down()
+        if change_pac_mouth:
+            self.pac.change_mouth()
 
     def draw(self, surface: pygame.Surface):
         """Draws the sprites on the game surface

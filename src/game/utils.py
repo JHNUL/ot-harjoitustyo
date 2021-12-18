@@ -2,8 +2,7 @@ import os
 import re
 from random import choice
 import pygame
-from constants import CELL_SIZE
-from game.enums import Direction
+from constants import CELL_SIZE, Direction
 
 
 def normalize(n: int) -> int:

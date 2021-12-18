@@ -1,7 +1,11 @@
 from typing import List
 import pygame
 
-from constants import DIRECTION_KEYS, MOVE_ENEMIES, MOVE_VULNERABLE_ENEMIES, MOVEMENTS, QUIT_EVENT
+from constants import DIRECTION_KEYS, DIRECTION_MAP, \
+    MOVE_ENEMIES, \
+    MOVE_VULNERABLE_ENEMIES, \
+    PAC_CHANGE_MOUTH, \
+    QUIT_EVENT
 from game.level import Level
 from ui.renderer import Renderer
 
@@ -34,33 +38,37 @@ class MainLoop:
         move_enemies = False
         move_vul_enemies = False
         do_quit = False
+        change_pac_mouth = False
         direction = current_direction
         for event in events:
             if event.type in (pygame.QUIT, QUIT_EVENT):
                 do_quit = True
             if event.type == pygame.KEYDOWN and event.key in DIRECTION_KEYS:
-                direction = MOVEMENTS[event.key]
+                direction = DIRECTION_MAP[event.key]
             if event.type == pygame.KEYUP and event.key in DIRECTION_KEYS:
-                if MOVEMENTS[event.key] == direction:
+                if DIRECTION_MAP[event.key] == direction:
                     direction = None
             if event.type == MOVE_ENEMIES:
                 move_enemies = True
             if event.type == MOVE_VULNERABLE_ENEMIES:
                 move_vul_enemies = True
-        return (direction, move_enemies, move_vul_enemies, do_quit)
+            if event.type == PAC_CHANGE_MOUTH:
+                change_pac_mouth = True
+        return (direction, move_enemies, move_vul_enemies, do_quit, change_pac_mouth)
 
     def start(self):
         direction = None
         while True:
             events = pygame.event.get()
-            direction, move_enemies, move_vul_enemies, do_quit = self._handle_events(
+            direction, move_enemies, move_vul_enemies, do_quit, change_pac_mouth = self._handle_events(
                 events, direction)
             if do_quit:
                 break
             self._level.do_update(
                 move_enemies=move_enemies,
                 move_vulnerable_enemies=move_vul_enemies,
-                direction=direction
+                direction=direction,
+                change_pac_mouth=change_pac_mouth
             )
             if self._level.is_finished:
                 direction = None
