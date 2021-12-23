@@ -26,15 +26,6 @@ class MainLoop:
         self._clock = clock
 
     def _handle_events(self, events: List[pygame.event.Event], current_direction):
-        """Handle events from user interface or elsewhere
-
-        Args:
-            events ([type]): [description]
-            current_direction ([type]): [description]
-
-        Returns:
-            [type]: [description]
-        """
         move_enemies = False
         move_vul_enemies = False
         do_quit = False
@@ -57,6 +48,7 @@ class MainLoop:
         return (direction, move_enemies, move_vul_enemies, do_quit, change_pac_mouth)
 
     def start(self):
+        """Starts the game loop"""
         direction = None
         while True:
             events = pygame.event.get()

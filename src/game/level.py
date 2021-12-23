@@ -35,11 +35,6 @@ class Level:
         self._create_level()
 
     def _get_top_scores(self) -> str:
-        """Get the top scores
-
-        Returns:
-            str: string with the top scores and players
-        """
         scores = self._score_service.get_top_scores_with_player_names(3)
         if scores is not None:
             leaders = ", ".join(
@@ -48,7 +43,6 @@ class Level:
         return "Error fetching leaderboard"
 
     def _create_level(self):
-        """Create the level from level map"""
         self._sprites = pygame.sprite.Group()
         self._sprites = pygame.sprite.Group()
         self._walls = pygame.sprite.Group()
@@ -80,22 +74,9 @@ class Level:
         )
 
     def _check_collision(self, sprites: pygame.sprite.Group, do_kill=False) -> int:
-        """Check collisions between Pac and other sprites
-
-        Args:
-            sprites (pygame.sprite.Group): collection of sprites to check against
-            do_kill (bool, optional): if True, remove from collection. Defaults to False.
-
-        Returns:
-            int: number over 0 if there is collision
-        """
         return len(pygame.sprite.spritecollide(self.pac, sprites, do_kill))
 
     def _check_collisions(self):
-        """Check collisions between several groups of sprites and Pac
-        and handle score and lives accordingly. If Pac is ephemeral
-        it cannot collide with enemies or nuggets.
-        """
         if self.pac.ephemeral:
             return
         if self._check_collision(self._nuggets, do_kill=True):
@@ -123,12 +104,6 @@ class Level:
                     break
 
     def _move_enemies(self, move_vulnerable=False):
-        """Moves enemies in normal and vulnerable state
-
-        Args:
-            move_vulnerable (bool, optional): True when enemy in vulnerable state.
-            Defaults to False.
-        """
         for enemy in self._enemies:
             if enemy.vulnerable and move_vulnerable:
                 enemy.move(self._walls)

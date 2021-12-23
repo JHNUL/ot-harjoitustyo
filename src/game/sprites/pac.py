@@ -11,45 +11,50 @@ class Pac(pygame.sprite.Sprite):
         lives (int): how many lives Pac has left
         ephemeral (bool): when True, Pac is invulnerable but cannot consume nuggets
         timer (int): countdown time to return to normal state
-        image (Surface): the in-game image of the Pac
-        damage_image (Surface): image when Pac has taken damage
+        image (Surface): the rendered image of Pac
         rect (Rect): the rectangle of the in-game image
     """
 
     def __init__(self, x: int, y: int):
+        """Constructor
+
+        Args:
+            x (int): x coordinate
+            y (int): y coordinate
+        """
         super().__init__()
         self.lives = 3
         self.ephemeral = False
         self._is_mouth_open = True
         self._orientation = Direction.RIGHT  # now hardcoded starting position
         self.timer = 15
-        self.image_open_right = pygame.transform.scale(
+        self._image_open_right = pygame.transform.scale(
             ImageLoader.get("pac_mouth_open_r"), (CELL_SIZE, CELL_SIZE))
-        self.image_open_down = pygame.transform.scale(
+        self._image_open_down = pygame.transform.scale(
             ImageLoader.get("pac_mouth_open_d"), (CELL_SIZE, CELL_SIZE))
-        self.image_open_left = pygame.transform.scale(
+        self._image_open_left = pygame.transform.scale(
             ImageLoader.get("pac_mouth_open_l"), (CELL_SIZE, CELL_SIZE))
-        self.image_open_up = pygame.transform.scale(
+        self._image_open_up = pygame.transform.scale(
             ImageLoader.get("pac_mouth_open_u"), (CELL_SIZE, CELL_SIZE))
-        self.image_closed_right = pygame.transform.scale(
+        self._image_closed_right = pygame.transform.scale(
             ImageLoader.get("pac_mouth_closed_r"), (CELL_SIZE, CELL_SIZE))
-        self.image_closed_down = pygame.transform.scale(
+        self._image_closed_down = pygame.transform.scale(
             ImageLoader.get("pac_mouth_closed_d"), (CELL_SIZE, CELL_SIZE))
-        self.image_closed_left = pygame.transform.scale(
+        self._image_closed_left = pygame.transform.scale(
             ImageLoader.get("pac_mouth_closed_l"), (CELL_SIZE, CELL_SIZE))
-        self.image_closed_up = pygame.transform.scale(
+        self._image_closed_up = pygame.transform.scale(
             ImageLoader.get("pac_mouth_closed_u"), (CELL_SIZE, CELL_SIZE))
-        self.images = [
-            self.image_open_right,
-            self.image_open_down,
-            self.image_open_left,
-            self.image_open_up,
-            self.image_closed_right,
-            self.image_closed_down,
-            self.image_closed_left,
-            self.image_closed_up
+        self._images = [
+            self._image_open_right,
+            self._image_open_down,
+            self._image_open_left,
+            self._image_open_up,
+            self._image_closed_right,
+            self._image_closed_down,
+            self._image_closed_left,
+            self._image_closed_up
         ]
-        self.image = self.image_open_right
+        self.image = self._image_open_right
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -74,13 +79,13 @@ class Pac(pygame.sprite.Sprite):
 
     def _resolve_image(self, direction: Direction):
         if direction == Direction.RIGHT:
-            self.image = self.image_open_right if self._is_mouth_open else self.image_closed_right
+            self.image = self._image_open_right if self._is_mouth_open else self._image_closed_right
         elif direction == Direction.DOWN:
-            self.image = self.image_open_down if self._is_mouth_open else self.image_closed_down
+            self.image = self._image_open_down if self._is_mouth_open else self._image_closed_down
         elif direction == Direction.LEFT:
-            self.image = self.image_open_left if self._is_mouth_open else self.image_closed_left
+            self.image = self._image_open_left if self._is_mouth_open else self._image_closed_left
         elif direction == Direction.UP:
-            self.image = self.image_open_up if self._is_mouth_open else self.image_closed_up
+            self.image = self._image_open_up if self._is_mouth_open else self._image_closed_up
         x = self.rect.x
         y = self.rect.y
         self.rect = self.image.get_rect()
@@ -92,13 +97,14 @@ class Pac(pygame.sprite.Sprite):
         self.timer -= 1
         if self.timer <= 0:
             self.ephemeral = False
-            for image in self.images:
+            for image in self._images:
                 image.set_alpha(255)
             self.timer = 15
 
     def set_ephemeral(self):
+        """Sets Pac as ephemeral and makes image slightly transparent"""
         self.ephemeral = True
-        for image in self.images:
+        for image in self._images:
             image.set_alpha(100)
 
     def change_mouth(self):

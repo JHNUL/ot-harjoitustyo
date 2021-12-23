@@ -30,7 +30,6 @@ class LoginMenu:
         self._init_screen()
 
     def _start_btn_callback(self):
-        """Callback for start button"""
         if not self._start_disabled:
             player = self._player_service.player_login(self._name)
             if player is not None:
@@ -43,17 +42,11 @@ class LoginMenu:
             self._label.show()
 
     def _quit_game_callback(self):
-        """Callback for quit game button"""
         quit_event = event.Event(const.QUIT_EVENT)
         event.post(quit_event)
         self._menu.disable()
 
     def _set_name(self, value: str):
-        """Set the name from input
-
-        Args:
-            value (str): input from ui component
-        """
         if not re.match("^([a-zA-Z0-9]){1,10}$", value):
             self._label.show()
             self._start_disabled = True
@@ -63,12 +56,11 @@ class LoginMenu:
         self._name = value
 
     def _init_screen(self):
-        """Initializes the menu with buttons and input"""
-        self._label = self._menu.add.label("Name must have 1-10 normal characters")
+        self._label = self._menu.add.label(const.NAME_INPUT_WARNING)
         self._label.add_underline(Color(255, 0, 0), 0, 2)
         self._label.resize(240, 30)
         self._label.hide()
-        self._error_label = self._menu.add.label("Unable to login or create player")
+        self._error_label = self._menu.add.label(const.LOGIN_FAILED)
         self._error_label.add_underline(Color(255, 0, 0), 0, 2)
         self._error_label.resize(240, 30)
         self._error_label.hide()

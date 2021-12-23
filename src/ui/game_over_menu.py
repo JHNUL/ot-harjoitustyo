@@ -23,19 +23,16 @@ class GameOverMenu:
         self._init_screens()
 
     def _new_game_callback(self):
-        """Callback for new game button"""
         self._score_label.hide()
         self._menu.disable()
         self._level.reset()
 
     def _quit_game_callback(self):
-        """Callback for quit game button"""
         self._menu.disable()
         quit_event = event.Event(const.QUIT_EVENT)
         event.post(quit_event)
 
     def _init_screens(self):
-        """Initializes the menu with buttons and label"""
         self._label = self._menu.add.label("")
         self._score_label = self._menu.add.label("")
         self._score_label.hide()

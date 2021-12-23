@@ -44,6 +44,14 @@ BTN_TEXT_QUIT = "Quit"
 """Text input labels"""
 INPUT_LABEL_PLAYER_NAME = "Player name:"
 
+"""Info texts"""
+NAME_INPUT_WARNING = "Name must have 1-10 normal characters"
+LOGIN_FAILED = "Unable to login or create player"
+
+"""In-game texts"""
+STATUS = "SCORE: {}, LIVES: {}"
+LEADERBOARD = "LEADERBOARD: {}"
+
 """Environment"""
 PRODUCTION = "prod"
 TESTING = "test"

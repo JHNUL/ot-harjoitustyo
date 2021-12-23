@@ -11,6 +11,7 @@ class Enemy(pygame.sprite.Sprite):
         image (Surface): the in-game image of the enemy
         rect (Rect): the rectangle of the in-game image
         vulnerable (bool): if enemy is vulnerable
+        timer (int): amount to wait until vulnerability ends
         direction (Direction): one of four possible directions in the game
     """
 
@@ -34,16 +35,6 @@ class Enemy(pygame.sprite.Sprite):
         self.direction = get_random_direction()
 
     def _can_move(self, walls: pygame.sprite.Group, x: int, y: int) -> bool:
-        """Method to check if enemy can move to given x and y position
-
-        Args:
-            walls (pygame.sprite.Group): collection of sprites representing walls in the game
-            x (int): x coordinate to move
-            y (int): y coordinate to move
-
-        Returns:
-            bool: True if can move
-        """
         can = True
         self.rect.move_ip(x, y)
         if len(pygame.sprite.spritecollide(self, walls, False)):
@@ -52,14 +43,6 @@ class Enemy(pygame.sprite.Sprite):
         return can
 
     def _get_allowed_directions(self, walls: pygame.sprite.Group) -> list:
-        """Get possible directions where the enemy can move to. Directions are represented as enum.
-
-        Args:
-            walls (pygame.sprite.Group): collection of sprites representing walls in the game
-
-        Returns:
-            list: List of possible directions
-        """
         allowed_dirs = {
             Direction.UP: True,
             Direction.RIGHT: True,
@@ -109,6 +92,7 @@ class Enemy(pygame.sprite.Sprite):
             self.rect.move_ip(-d_x, -d_y)
 
     def set_vulnerable(self):
+        """Sets the enemy as vulnerable"""
         self.vulnerable = True
         self.image.set_alpha(128)
 

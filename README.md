@@ -26,7 +26,7 @@ Projektin riippuvuudet asennetaan komennolla:
 poetry install
 ```
 
-Sovellus käyttää sqlite-tietokantaa, mutta toistaiseksi ilman migraatioskriptejä. Kun siis lataat uuden version testattavaksi, poista edellisen suorituskerran generoima `data/database.prod.sqlite` tiedosto.
+Sovellus käyttää sqlite-tietokantaa, mutta ilman migraatioskriptejä. Kun siis lataat uuden version testattavaksi, poista edellisen suorituskerran generoima `data/database.prod.sqlite` tiedosto.
 
 ## Komentorivitoiminnot
 

@@ -12,6 +12,14 @@ class Score:
     """
 
     def __init__(self, value: int, player_id: int = None, timestamp: float = None, id_: int = None):
+        """Constructor
+
+        Args:
+            value (int): score value
+            player_id (int, optional): player id. Defaults to None.
+            timestamp (float, optional): timestamp. Defaults to None.
+            id_ (int, optional): score id. Defaults to None.
+        """
         self.player_id = player_id
         self.timestamp = timestamp
         self.value = value
