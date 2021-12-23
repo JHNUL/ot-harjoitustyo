@@ -59,4 +59,4 @@ poetry run invoke lint
 
 - [release 2](https://github.com/JHNUL/ot-harjoitustyo/releases/tag/viikko6)
 
-- [release 2](https://github.com/JHNUL/ot-harjoitustyo/releases/tag/viikko6)
+- [loppupalautus](https://github.com/JHNUL/ot-harjoitustyo/releases/tag/loppupalautus)
