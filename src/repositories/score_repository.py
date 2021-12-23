@@ -13,21 +13,22 @@ class ScoreRepository:
         """
         self._connection = connection
 
-    def add_score(self, score: Score) -> bool:
+    def add_score(self, score: Score) -> int:
         """Add new score
 
         Args:
             score (Score): score object
 
         Returns:
-            bool: True if succeeded
+            int: id of the added score
         """
-        self._connection.cursor().execute(
+        cursor = self._connection.cursor()
+        cursor.execute(
             "INSERT INTO Scores(player_id, timestamp, value) VALUES (?,?,?);",
             (score.player_id, score.timestamp, score.value)
         )
         self._connection.commit()
-        return True
+        return cursor.lastrowid
 
     def find_scores_by_player_id(self, player_id: int, limit=0) -> list:
         """Find scores with player id
@@ -48,8 +49,7 @@ class ScoreRepository:
         rows = cursor.fetchall()
         if rows is None:
             return []
-        return [Score(s['value'], s['player_id'], s['timestamp'], id_=s['id']) for s in rows]
-
+        return [Score.from_row(row) for row in rows]
 
     def find_top_scores_with_player_names(self, limit=5) -> list:
         """Find top scores with the names of the players who made them
@@ -66,3 +66,15 @@ class ScoreRepository:
         if rows is None:
             return []
         return [(row['value'], row['name'], row['timestamp']) for row in rows]
+
+    def find_all_scores(self) -> list:
+        """Find all scores
+
+        Returns:
+            list: all scores
+        """
+        cursor = self._connection.cursor().execute("SELECT * FROM Scores ORDER BY value DESC;")
+        rows = cursor.fetchall()
+        if rows is None:
+            return []
+        return [Score.from_row(row) for row in rows]

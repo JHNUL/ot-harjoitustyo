@@ -9,21 +9,22 @@ Pelaaja
 ### Toiminnallisuuden kuvaus (MVP)
 Tunnuksien luominen:
 - pelaajan täytyy luoda käyttäjätunnus ***tehty***
+- virheellisestä tunnuksesta ilmoitetaan ***tehty***
 
 Kirjautuminen:
-- Kirjautuminen tapahtuu syöttämällä käyttäjätunnus, mitään salasanoja ei ole. Jos käyttäjätunnusta ei ole olemassa, se tallennetaan kirjautumisen yhteydessä. ***tehty***s
+- Kirjautuminen tapahtuu syöttämällä käyttäjätunnus, mitään salasanoja ei ole. Jos käyttäjätunnusta ei ole olemassa, se tallennetaan kirjautumisen yhteydessä. ***tehty***
 
 Kirjautumisen jälkeen:
-- pelaaja näkee *tuotantotasoisen* pelialustan ja leaderboardin, jossa listattu max 3 kappaletta parhaita tuloksia käyttäjätunnuksineen
+- pelaaja näkee pelialustan ja leaderboardin, jossa listattu max 3 kappaletta parhaita tuloksia käyttäjätunnuksineen ***tehty***
 - pelaaja voi kontrolloida pac-ötökkää nuolinäppäimillä ***tehty***
 - pelikentällä on vihollisia, jotka liikkuvat näennäisen satunnaisesti ***tehty***
 - viholliseen törmäämisestä pelaaja menettää yhden elämän ***tehty***
 - viholliseen törmäämisen jälkeen Pac on hetken aikaa turvassa mutta ei voi kerätä nappuloita ***tehty***
 - pelaaja voi kerätä nappuloita ***tehty***
-- kerättyään supernappulan pelaaja voi syödä vihollisia tietyn ajan
+- kerättyään supernappulan pelaaja voi syödä vihollisia tietyn ajan ***tehty***
 - pelaaja näkee reaaliaikaisen pistesaldonsa ***tehty***
 - pelaaja näkee jäljellä olevat elämänsä ***tehty***
-- pelin läpäistyä pelaajan pistesaldo näkyy leaderboardissa, jos se riittää sinne pääsyyn
+- pelin läpäistyä pelaajan pistesaldo näkyy leaderboardissa, jos se riittää sinne pääsyyn ***tehty***
 - peli loppuu jos pelaajan elämät loppuvat ***tehty***
 
 
@@ -31,6 +32,7 @@ Kirjautumisen jälkeen:
 Sovelluksen tulee toimia Linux ja macOS-käyttöjärjestelmillä. Tuettu Python-versio on >= 3.8. Pelaajien käyttäjätunnukset ja pelikertojen tulokset tallentuvat sqlite-tietokantaan.
 
 ## Jatkokehitysideat
+- Pacin ja vihollisten liikkuminen on sujuvaa eikä solu kerrallaan nykivää
 - pelaaja voi kirjautua ulos jolloin sovellus palaa kirjautumisnäkymään
 - pelissä on useampia tasoja
 - peliin voi "importata" itse luodun tason

@@ -23,8 +23,17 @@ Pelin alussa pelaajaa pyydetään luomaan pelaajatunnus. Käyttäjätunnukseen t
 
 ![Kuva](./images/login.png)
 
+Jos yrittää kirjautua käyttäjätunnuksella, joka ei täytä vaatimuksia (1-10 alfanumeerista merkkiä, ei ääkkösiä) näytetään seuraava virheviesti.
+
+
+![Kuva](./images/login_warning.png)
+
 ## Kirjautumisen jälkeen
 
-Peli alkanee. Tämä on vielä vähän raffi visuaalinen ilme, mutta homma ei ole vielä valmis.
+Peli alkanee. Kenttä näyttää allaolevan kuvan mukaiselta. Pacin suu liikkuu kiinni ja auki ja vihollisten värit arvotaan pienestä joukosta kentän alkaessa.
 
 ![Kuva](./images/pacman.png)
+
+Jos pelaaja saa kerättyä kaikki nugetit näytetään seuraava menu, josta näkee saavutetut pisteet ja voi valita pelaavansa uudelleen tai lopettaa.
+
+![Kuva](./images/game_over_menu.png)

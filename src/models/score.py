@@ -12,10 +12,28 @@ class Score:
     """
 
     def __init__(self, value: int, player_id: int = None, timestamp: float = None, id_: int = None):
+        """Constructor
+
+        Args:
+            value (int): score value
+            player_id (int, optional): player id. Defaults to None.
+            timestamp (float, optional): timestamp. Defaults to None.
+            id_ (int, optional): score id. Defaults to None.
+        """
         self.player_id = player_id
         self.timestamp = timestamp
         self.value = value
         self.id = id_
+
+    @staticmethod
+    def from_row(row) -> 'Score':
+        """Creates new Score object from db query row
+
+        Returns:
+            Score: Score object
+        """
+        return Score(id_=row['id'], value=row['value'],
+                     player_id=row['player_id'], timestamp=row['timestamp'])
 
     def increase(self, amount: int = 1):
         """Method to increse score
@@ -28,6 +46,14 @@ class Score:
     def reset(self):
         """reset the score to zero"""
         self.value = 0
+
+    def set_id(self, score_id: int):
+        """Setter for id
+
+        Args:
+            score_id (int): id
+        """
+        self.id = score_id
 
     def set_player_id(self, player: Player):
         """Setter for player id
