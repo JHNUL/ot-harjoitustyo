@@ -21,4 +21,5 @@
 | 14.12       | 5           | harjoitustyön työstöä viikko 6 |
 | 15.12       | 2           | harjoitustyön työstöä viikko 7 |
 | 18.12       | 4           | harjoitustyön työstöä viikko 7 |
-|yht| 62  |
+| 23.12       | 2           | loppupalautuksen viimeistely |
+|yht| 66  |
