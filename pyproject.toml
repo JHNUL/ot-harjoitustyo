@@ -5,10 +5,10 @@ description = ""
 authors = ["Juhanir <juhani.riisio@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
-pygame = "^2.0.3"
-pygame-menu = "^4.1.5"
-invoke = "^1.6.0"
+python = "^3.11"
+pygame = "^2.5.1"
+pygame-menu = "^4.4.3"
+invoke = "^2.2.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"

@@ -18,7 +18,7 @@ Sovellus on klassinen Pacman-peli, jossa pelaaja ohjaa Pacman-ötökkää labyri
 
 Järjestelmässä on oltava seuraavat ohjelmistot asennettuna:
 
- - [Python](https://www.python.org/downloads/) v3.8+
+ - [Python](https://www.python.org/downloads/) v3.11+
  - [Poetry](https://python-poetry.org/)
 
 Projektin riippuvuudet asennetaan komennolla:
